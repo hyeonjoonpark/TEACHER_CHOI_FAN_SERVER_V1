@@ -25,8 +25,6 @@ public class UserEntity {
     @Lob
     @Column(name = "profile_image")
     private byte[] profileImage;
-    @Column(name = "acc_token")
-    private String accToken;
     @Column(name = "ref_token")
     private String refToken;
     @Column(name = "is_admin")
