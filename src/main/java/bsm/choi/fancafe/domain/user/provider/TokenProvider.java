@@ -16,7 +16,7 @@ import io.jsonwebtoken.Jwts;
 @RequiredArgsConstructor
 public class TokenProvider {
     private final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
-    private String secretKey = "FAcAfeSEcrETKey";
+    private final String secretKey = "FAcAfeSEcrETKey";
 
     private Key getSignInKey() {
         return Keys.secretKeyFor(SignatureAlgorithm.HS512);
