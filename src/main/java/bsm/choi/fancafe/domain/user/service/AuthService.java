@@ -45,7 +45,7 @@ public class AuthService {
             int exprTime = 1000 * 60 * 60;
             System.out.println(exprTime);
 
-            String token = tokenProvider.createJwt(id, email);
+            String token = tokenProvider.createJwt(id);
             System.out.println(token);
 
             LoginResponseDto loginResponseDto = new LoginResponseDto(token, exprTime, userEntity);

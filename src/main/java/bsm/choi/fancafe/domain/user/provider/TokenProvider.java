@@ -22,12 +22,11 @@ public class TokenProvider {
         return Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
-    public String createJwt(String codeNumber, String email) {
+    public String createJwt(String id) {
 
         return Jwts.builder()
                 .signWith(getSignInKey())
-                .setSubject(codeNumber)
-                .setSubject(email)
+                .setSubject(id)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(this.ACCESS_TOKEN_EXPIRE_TIME))
                 .compact();
