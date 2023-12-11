@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserListService {
+public class UserService {
 
     private final UserRepository userRepository;
     public List<UserEntity> userList(String id) {
