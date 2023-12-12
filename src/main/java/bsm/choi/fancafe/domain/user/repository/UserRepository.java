@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
 
-    List<UserEntity> findAllByIdNot(String id);
 }

@@ -11,9 +11,4 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-    public List<UserEntity> userList(String id) {
-        List<UserEntity> result = userRepository.findAllByIdNot(id);
-        return result;
-    }
 }
