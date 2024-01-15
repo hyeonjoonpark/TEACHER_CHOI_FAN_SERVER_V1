@@ -3,12 +3,12 @@ package bsm.choi.fancafe.domain.user.service;
 import bsm.choi.fancafe.domain.user.entity.GoodsEntity;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.GoodsUploadRequestDto;
 import bsm.choi.fancafe.domain.user.repository.GoodsRepository;
+import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
+import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +20,12 @@ public class GoodsService {
         List<GoodsEntity> result = goodsRepository.findAll();
         return result;
     }
-
-    public void upload(GoodsUploadRequestDto dto) {
-
+    public void save(GoodsUploadRequestDto dto) {
+        try {
+            dto.toEntity();
+            goodsRepository.save(dto);
+        } catch (GlobalException e) {
+            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
     }
 }

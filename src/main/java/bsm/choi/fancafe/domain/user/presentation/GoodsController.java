@@ -4,6 +4,7 @@ import bsm.choi.fancafe.domain.user.entity.GoodsEntity;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.GoodsUploadRequestDto;
 import bsm.choi.fancafe.domain.user.service.GoodsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class GoodsController {
     }
 
     @PostMapping("/goods/upload")
-    public void goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
-        goodsService.upload(dto);
+    public ResponseEntity<String> goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
+        goodsService.save(dto);
+        return ResponseEntity.ok().build();
     }
 }
