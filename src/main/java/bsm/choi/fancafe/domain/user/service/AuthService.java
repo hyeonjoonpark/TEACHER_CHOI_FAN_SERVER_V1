@@ -2,24 +2,55 @@ package bsm.choi.fancafe.domain.user.service;
 
 import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
+import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.ResponseDto;
 import bsm.choi.fancafe.domain.user.provider.TokenProvider;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
+import bsm.choi.fancafe.global.exception.GlobalException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
-    @Autowired
-    public AuthService(UserRepository userRepository, TokenProvider tokenProvider) {
-        this.userRepository = userRepository;
-        this.tokenProvider = tokenProvider;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9+_.-]";
+    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+
+    public static boolean validate(String email) {
+        return pattern.matcher(email).matches();
+    }
+
+    public void register(SignUpRequestDto dto) {
+        try {
+            String email = dto.getEmail();
+            boolean isEmailBSSM = validate(email);
+
+            UserEntity isExist = userRepository.findByEmail(email);
+
+            if(isExist != null) {
+                throw new GlobalException(ErrorCode.USER_ALREADY_EXIST);
+            }
+
+            if(isEmailBSSM) {
+                UserEntity user = dto.toEntity(bCryptPasswordEncoder);
+                userRepository.save(user);
+            }
+            else {
+                throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
+            }
+        } catch (GlobalException e) {
+            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseDto<LoginResponseDto> login(LoginRequestDto dto) {
@@ -42,7 +73,7 @@ public class AuthService {
             }
 
             UserEntity userEntity = userEntityOptional.get();
-            int exprTime = 1000 * 60 * 60;
+            int exprTime = (int) tokenProvider.getACCESS_TOKEN_EXPIRE_TIME();
             System.out.println(exprTime);
 
             String token = tokenProvider.createJwt(id);

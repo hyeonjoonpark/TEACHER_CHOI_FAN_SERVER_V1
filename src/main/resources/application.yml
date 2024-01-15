@@ -1,0 +1,12 @@
+server:
+  servlet:
+    context-path: /api
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: phj@3473

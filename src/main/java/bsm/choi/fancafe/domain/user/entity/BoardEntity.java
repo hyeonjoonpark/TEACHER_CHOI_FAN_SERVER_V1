@@ -1,19 +1,16 @@
 package bsm.choi.fancafe.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 
-@Component
 @Entity
 @Table(name = "board")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardEntity {
     @Id
     @Column(name = "board_id")
@@ -24,7 +21,9 @@ public class BoardEntity {
     @Column(name = "content")
     private String content;
     @Column(name = "writer")
-    private String writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private UserEntity writer;
     @Column(name = "write_date")
     private ZonedDateTime writeDate;
     @Column(name = "like_count")

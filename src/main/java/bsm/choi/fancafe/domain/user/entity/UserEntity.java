@@ -1,17 +1,10 @@
 package bsm.choi.fancafe.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Component
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "users")
 @Table(name = "users")
 public class UserEntity {
@@ -29,4 +22,14 @@ public class UserEntity {
     private String refToken;
     @Column(name = "is_admin")
     private byte isAdmin;
+
+    @Builder
+    public UserEntity(String id, String email, String password, byte[] profileImage, String refToken, byte isAdmin) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.profileImage = profileImage;
+        this.refToken = refToken;
+        this.isAdmin = isAdmin;
+    }
 }

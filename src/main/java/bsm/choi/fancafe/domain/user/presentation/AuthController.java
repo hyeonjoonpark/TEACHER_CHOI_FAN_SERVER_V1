@@ -1,20 +1,25 @@
 package bsm.choi.fancafe.domain.user.presentation;
 
 import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
+import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.ResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
+@RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
-    @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    @PostMapping("/signUp")
+    public ResponseEntity<String> signIn(@RequestBody SignUpRequestDto dto) {
+        authService.register(dto);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
