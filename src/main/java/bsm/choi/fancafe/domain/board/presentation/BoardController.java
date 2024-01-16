@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -43,5 +44,11 @@ public class BoardController {
     public ResponseEntity<Object> boardUpload(@RequestBody BoardUploadRequestDto dto) {
         boardService.save(dto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/list/:id")
+    public List<BoardEntity> boardList(@RequestParam String id) {
+        List<BoardEntity> result = boardService.getBoardList(id);
+        return result;
     }
 }
