@@ -1,5 +1,6 @@
-package bsm.choi.fancafe.domain.user.entity;
+package bsm.choi.fancafe.domain.board.entity;
 
+import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -20,7 +21,6 @@ public class BoardEntity {
     private String title;
     @Column(name = "content")
     private String content;
-    @Column(name = "writer")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private UserEntity writer;

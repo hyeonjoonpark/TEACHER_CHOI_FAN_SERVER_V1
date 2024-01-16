@@ -6,18 +6,17 @@ import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.ResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<String> signIn(@RequestBody SignUpRequestDto dto) {
+    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto dto) {
         authService.register(dto);
         return ResponseEntity.ok().build();
     }

@@ -1,8 +1,10 @@
-package bsm.choi.fancafe.domain.user.entity;
+package bsm.choi.fancafe.domain.goods.entity;
 
+import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -18,19 +20,25 @@ public class GoodsEntity {
     private String goodsName;
     @Column(name = "price")
     private int price;
-    @Column(name = "seller_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private UserEntity sellerId;
     @Column(name = "goods_date")
-    private ZonedDateTime date;
+    private LocalDateTime date;
+    @Column(name = "goods_count")
+    private Long count;
 
     @Builder
-    public GoodsEntity(int goodsId, String goodsName, int price, UserEntity sellerId, ZonedDateTime date) {
+    public GoodsEntity(int goodsId, String goodsName, int price, UserEntity sellerId, LocalDateTime date, Long count) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.price = price;
         this.sellerId = sellerId;
         this.date = date;
+        this.count = count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 }

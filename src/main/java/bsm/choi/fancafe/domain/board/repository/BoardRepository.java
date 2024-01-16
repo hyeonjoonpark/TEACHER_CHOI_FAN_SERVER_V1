@@ -1,6 +1,6 @@
-package bsm.choi.fancafe.domain.user.repository;
+package bsm.choi.fancafe.domain.board.repository;
 
-import bsm.choi.fancafe.domain.user.entity.BoardEntity;
+import bsm.choi.fancafe.domain.board.entity.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {

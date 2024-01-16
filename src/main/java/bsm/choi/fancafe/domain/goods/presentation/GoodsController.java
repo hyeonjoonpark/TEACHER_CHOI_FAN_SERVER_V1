@@ -1,8 +1,8 @@
-package bsm.choi.fancafe.domain.user.presentation;
+package bsm.choi.fancafe.domain.goods.presentation;
 
-import bsm.choi.fancafe.domain.user.entity.GoodsEntity;
-import bsm.choi.fancafe.domain.user.presentation.dto.request.GoodsUploadRequestDto;
-import bsm.choi.fancafe.domain.user.service.GoodsService;
+import bsm.choi.fancafe.domain.goods.entity.GoodsEntity;
+import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
+import bsm.choi.fancafe.domain.goods.service.GoodsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/goods")
 @RequiredArgsConstructor
 public class GoodsController {
     private final GoodsService goodsService;
-    @GetMapping("/goods/list")
+    @GetMapping("/list")
     public List<GoodsEntity> goodsList() {
-        List<GoodsEntity> result = goodsService.goodsList();
+        List<GoodsEntity> result = goodsService.getList();
         return result;
     }
 
-    @PostMapping("/goods/upload")
+    @PostMapping("/upload")
     public ResponseEntity<String> goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
-        goodsService.save(dto);
+        goodsService.saveGoods(dto);
         return ResponseEntity.ok().build();
     }
 }

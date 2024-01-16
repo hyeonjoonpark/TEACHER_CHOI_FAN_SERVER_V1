@@ -23,17 +23,17 @@ public class AuthService {
     private final TokenProvider tokenProvider;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9+_.-]";
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@gmail.com";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
     public static boolean validate(String email) {
         return pattern.matcher(email).matches();
     }
 
-    public void register(SignUpRequestDto dto) {
+    public void register(SignUpRequestDto dto) throws GlobalException{
         try {
             String email = dto.getEmail();
-            boolean isEmailBSSM = validate(email);
+            boolean isEmailRight = validate(email);
 
             UserEntity isExist = userRepository.findByEmail(email);
 
@@ -41,7 +41,7 @@ public class AuthService {
                 throw new GlobalException(ErrorCode.USER_ALREADY_EXIST);
             }
 
-            if(isEmailBSSM) {
+            if(isEmailRight) {
                 UserEntity user = dto.toEntity(bCryptPasswordEncoder);
                 userRepository.save(user);
             }
@@ -49,6 +49,7 @@ public class AuthService {
                 throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
             }
         } catch (GlobalException e) {
+            e.printStackTrace();
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,7 +59,7 @@ public class AuthService {
         String email = dto.getEmail();
 
         try {
-            boolean exist = userRepository.existsById(id);
+            boolean exist = userRepository.existsByIdAndEmail(id, email);
             System.out.println(exist);
             if (!exist) {
                 return ResponseDto.setFailed("Login Info is Wrong");
@@ -83,7 +84,6 @@ public class AuthService {
             System.out.println(loginResponseDto);
             return ResponseDto.setSuccess("Login Success", loginResponseDto);
         } catch (Exception e) {
-            e.printStackTrace(); // 에러 스택 트레이스를 출력합니다.
             return ResponseDto.setFailed("Database Error");
         }
     }
