@@ -2,16 +2,13 @@ package bsm.choi.fancafe.domain.board.entity;
 
 import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "board")
-@Data
+@Getter @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardEntity {
     @Id
@@ -40,6 +37,14 @@ public class BoardEntity {
         this.writer = writer;
         this.writeDate = writeDate;
         this.likeCount = likeCount;
+        this.viewCount = viewCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
 }

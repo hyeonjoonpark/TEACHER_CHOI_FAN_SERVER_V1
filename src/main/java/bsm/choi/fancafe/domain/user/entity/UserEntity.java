@@ -3,9 +3,9 @@ package bsm.choi.fancafe.domain.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
+@Getter @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "users")
+@Entity
 @Table(name = "users")
 public class UserEntity {
     @Id
