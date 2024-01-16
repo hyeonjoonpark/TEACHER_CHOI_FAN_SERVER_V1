@@ -3,7 +3,6 @@ package bsm.choi.fancafe.domain.board.service;
 import bsm.choi.fancafe.domain.board.entity.BoardEntity;
 import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
 import bsm.choi.fancafe.domain.board.repository.BoardRepository;
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,13 @@ public class BoardService {
     public Page<BoardEntity> boardList(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Object getDetail(Long id) {
+        System.out.println("확인");
+        return boardRepository.findDetailById(id);
+    }
+
 
     @Transactional
     public void save(BoardUploadRequestDto dto) {
@@ -36,4 +45,19 @@ public class BoardService {
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Transactional
+    public void update(int boardId) {
+        try {
+            Optional<BoardEntity> optionalBoard = boardRepository.findById(boardId);
+            if (optionalBoard.isPresent()) {
+                BoardEntity board = optionalBoard.get();
+                board.setLikeCount(board.getLikeCount() + 1);
+                boardRepository.save(board);
+            }
+        } catch (GlobalException e){
+            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

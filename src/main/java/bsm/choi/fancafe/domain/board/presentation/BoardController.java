@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -22,6 +24,19 @@ public class BoardController {
         int adjustedPage = page > 0 ? page - 1 : 0; // 페이지 번호 조정
         PageRequest pageRequest = PageRequest.of(adjustedPage, size);
         return boardService.boardList(pageRequest);
+    }
+
+    @GetMapping("/detail")
+    public Object boardDetail(@RequestParam Long id) {
+        Object board = boardService.getDetail(id);
+        return board;
+    }
+
+    @PutMapping("/like/update")
+    public ResponseEntity<BoardEntity> updateCount(@RequestBody int likeCount) {
+        boardService.update(likeCount);
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/upload")
