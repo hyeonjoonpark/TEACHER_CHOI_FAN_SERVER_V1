@@ -4,5 +4,6 @@ import bsm.choi.fancafe.domain.goods.entity.GoodsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GoodsRepository extends JpaRepository<GoodsEntity, Integer> {
-    GoodsEntity findByGoodsName(String goodsName);
+
+    GoodsEntity findByGoodsNameAndPrice(String goodsName, int price);
 }

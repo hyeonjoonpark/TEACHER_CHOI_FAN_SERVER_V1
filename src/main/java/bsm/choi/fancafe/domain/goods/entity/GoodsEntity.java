@@ -20,16 +20,16 @@ public class GoodsEntity {
     private String goodsName;
     @Column(name = "price")
     private int price;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private UserEntity sellerId;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id")
+    private String sellerId;
     @Column(name = "goods_date")
     private LocalDateTime date;
     @Column(name = "goods_count")
     private Long count;
 
     @Builder
-    public GoodsEntity(int goodsId, String goodsName, int price, UserEntity sellerId, LocalDateTime date, Long count) {
+    public GoodsEntity(int goodsId, String goodsName, int price, String sellerId, LocalDateTime date, Long count) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.price = price;

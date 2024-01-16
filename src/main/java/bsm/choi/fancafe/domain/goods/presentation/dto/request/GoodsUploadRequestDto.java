@@ -15,13 +15,14 @@ import java.time.ZonedDateTime;
 public class GoodsUploadRequestDto {
     private String goodsName;
     private int price;
-    private UserEntity sellerId;
+    private String sellerId;
 
     public GoodsEntity toEntity() {
         return GoodsEntity.builder()
                 .goodsName(this.goodsName)
                 .price(this.price)
-                .sellerId(this.sellerId)
+                .count(1L)
+                .sellerId(sellerId)
                 .date(LocalDateTime.now())
                 .build();
     }

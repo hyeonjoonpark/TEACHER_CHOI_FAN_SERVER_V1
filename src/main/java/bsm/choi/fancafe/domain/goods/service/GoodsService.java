@@ -27,20 +27,27 @@ public class GoodsService {
         }
     }
     @Transactional
-    public void saveGoods(GoodsUploadRequestDto dto) throws GlobalException{
+    public void saveGoods(GoodsUploadRequestDto dto) throws GlobalException {
         try {
             String goodsName = dto.getGoodsName();
+            int goodsPrice = dto.getPrice();
 
-            GoodsEntity goodsList = goodsRepository.findByGoodsName(goodsName);
+            GoodsEntity existingGoods = goodsRepository.findByGoodsNameAndPrice(goodsName, goodsPrice);
 
-            if(goodsList != null) {
-                goodsList.setCount(goodsList.getCount() + 1);
+            if (existingGoods != null) {
+                // 이미 동일한 상품이 존재하는 경우, 수량을 증가시킵니다.
+                existingGoods.setCount(existingGoods.getCount() + 1);
+                goodsRepository.save(existingGoods);
+                System.out.println("수량 증가 완료");
+            } else {
+                // 동일한 상품이 존재하지 않는 경우, 새로운 상품을 저장합니다.
+                GoodsEntity goods = dto.toEntity();
+                goodsRepository.save(goods);
+                System.out.println("저장 완료");
             }
-
-            GoodsEntity goods = dto.toEntity();
-            goodsRepository.save(goods);
         } catch (GlobalException e) {
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
