@@ -3,24 +3,27 @@ package bsm.choi.fancafe.domain.user.service;
 import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
-import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
-import bsm.choi.fancafe.domain.user.presentation.dto.response.ResponseDto;
-import bsm.choi.fancafe.domain.user.provider.TokenProvider;
+import bsm.choi.fancafe.domain.user.utils.JwtUtil;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final TokenProvider tokenProvider;
+    private final JwtUtil jwtUtil;
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    private Long exprTime = 1000 * 60 * 60L;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@gmail.com";
@@ -54,37 +57,23 @@ public class AuthService {
         }
     }
 
-    public ResponseDto<LoginResponseDto> login(LoginRequestDto dto) {
+    public String login(LoginRequestDto dto) throws GlobalException {
         String id = dto.getId();
         String email = dto.getEmail();
 
         try {
-            boolean exist = userRepository.existsByIdAndEmail(id, email);
-            System.out.println(exist);
-            if (!exist) {
-                return ResponseDto.setFailed("Login Info is Wrong");
+            if(id == null || email == null) {
+                throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
             }
+            System.out.println("1");
 
-            Optional<UserEntity> userEntityOptional = userRepository.findById(id);
-            System.out.println(userEntityOptional);
-            System.out.println(userEntityOptional);
+            String token = jwtUtil.createJwt(id, email, secretKey, exprTime);
+            System.out.println("2");
 
-            if (userEntityOptional.isEmpty()) {
-                return ResponseDto.setFailed("User not found");
-            }
+            return token;
 
-            UserEntity userEntity = userEntityOptional.get();
-            int exprTime = (int) tokenProvider.getACCESS_TOKEN_EXPIRE_TIME();
-            System.out.println(exprTime);
-
-            String token = tokenProvider.createJwt(id);
-            System.out.println(token);
-
-            LoginResponseDto loginResponseDto = new LoginResponseDto(token, exprTime, userEntity);
-            System.out.println(loginResponseDto);
-            return ResponseDto.setSuccess("Login Success", loginResponseDto);
-        } catch (Exception e) {
-            return ResponseDto.setFailed("Database Error");
+        } catch (GlobalException e) {
+            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
 }

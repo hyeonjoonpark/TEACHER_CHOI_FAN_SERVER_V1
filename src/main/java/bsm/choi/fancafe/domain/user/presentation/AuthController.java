@@ -2,8 +2,6 @@ package bsm.choi.fancafe.domain.user.presentation;
 
 import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
-import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
-import bsm.choi.fancafe.domain.user.presentation.dto.response.ResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +20,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        ResponseDto<LoginResponseDto> result = authService.login(loginRequestDto);
+    public String  login(@RequestBody LoginRequestDto loginRequestDto) {
+        String result = authService.login(loginRequestDto);
         return result;
     }
 }

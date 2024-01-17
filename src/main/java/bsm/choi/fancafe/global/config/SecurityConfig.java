@@ -25,11 +25,16 @@ public class SecurityConfig {
         http
                 .authorizeRequests(
                         auth -> auth
-                                .requestMatchers(HttpMethod.POST, "/**").permitAll()
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/auth/signUp",
+                                        "/api/auth/login"
+                                ).permitAll()
                                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                                 .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults());
 
