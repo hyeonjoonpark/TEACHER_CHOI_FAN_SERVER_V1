@@ -10,6 +10,17 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+
+    // 만료되었는지 확인하는 메서드
+    public static boolean isExpired(String token, String secretKey) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration()
+                .before(new Date()); // token이 expired 된 것이 지금보다 전이면 expired 된것이다
+    }
+
     public static String createJwt(String id, String email, String secretKey, Long exprTime) {
         Claims claims = Jwts.claims();
         claims.put("id", id);
