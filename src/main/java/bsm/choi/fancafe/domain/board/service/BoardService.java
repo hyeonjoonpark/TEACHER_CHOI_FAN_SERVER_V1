@@ -18,50 +18,45 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final BoardRepository boardRepository;
+  private final BoardRepository boardRepository;
 
-    @Transactional(readOnly = true)
-    public Page<Board> boardList(Pageable pageable) {
-        return boardRepository.findAll(pageable);
+  @Transactional(readOnly = true)
+  public Page<Board> boardList(Pageable pageable) {
+    return boardRepository.findAll(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Object getDetail(Long id) {
+    System.out.println("확인");
+    return boardRepository.findDetailById(id);
+  }
+
+
+  @Transactional
+  public void save(BoardUploadRequestDto dto) {
+    try {
+      Board board = dto.toEntity();
+      boardRepository.save(board);
+    } catch (GlobalException e) {
+      throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
+  }
 
-    @Transactional(readOnly = true)
-    public Object getDetail(Long id) {
-        System.out.println("확인");
-        return boardRepository.findDetailById(id);
+  @Transactional
+  public void update(int boardId) {
+    try {
+      Optional<Board> optionalBoard = boardRepository.findById(boardId);
+      if (optionalBoard.isPresent()) {
+        Board board = optionalBoard.get();
+        board.setLikeCount(board.getLikeCount() + 1);
+        boardRepository.save(board);
+      }
+    } catch (GlobalException e) {
+      throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
+  }
 
-
-    @Transactional
-    public void save(BoardUploadRequestDto dto) {
-        String title = dto.getTitle();
-        String content = dto.getContent();
-        String writer = dto.getId();
-
-        try {
-            Board board = dto.toEntity(title, content, writer);
-            boardRepository.save(board);
-        } catch(GlobalException e) {
-            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @Transactional
-    public void update(int boardId) {
-        try {
-            Optional<Board> optionalBoard = boardRepository.findById(boardId);
-            if (optionalBoard.isPresent()) {
-                Board board = optionalBoard.get();
-                board.setLikeCount(board.getLikeCount() + 1);
-                boardRepository.save(board);
-            }
-        } catch (GlobalException e){
-            throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public List<Board> getBoardList(String id) {
-        return boardRepository.findBoardByUserId(id);
-    }
-
+  public List<Board> getBoardList(String id) {
+    return boardRepository.findBoardByUserId(id);
+  }
 }
