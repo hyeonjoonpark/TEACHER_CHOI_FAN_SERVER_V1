@@ -1,30 +1,47 @@
 package bsm.choi.fancafe.domain.user;
 
+import bsm.choi.fancafe.domain.board.Board;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-@Table(name = "users")
+@Entity(name = "user")
 public class User {
   @Id
-  @Column(name = "id")
+  @Column(name = "user_id")
   private String id;
   @Column(name = "email")
   private String email;
   @Column(name = "password")
   private String password;
-  @Lob
-  @Column(name = "profile_image")
-  private byte[] profileImage;
+  @Column(
+    name = "profile_image",
+    columnDefinition = "LONGBLOB"
+  )
+  private String profileImage;
+
+  @OneToMany(
+    mappedBy = "boardId", // boardId랑 매핑
+    cascade = CascadeType.ALL,
+    orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
+  )
+  private List<Board> boardList;
+  public void addBoard(Board board) {
+    board.setWriter(this);
+    this.boardList.add(board);
+  }
+
+
   @Column(name = "ref_token")
   private String refToken;
   @Column(name = "is_admin")
   private byte isAdmin;
 
   @Builder
-  public User(String id, String email, String password, byte[] profileImage, String refToken, byte isAdmin) {
+  public User(String id, String email, String password, String profileImage, String refToken, byte isAdmin) {
     this.id = id;
     this.email = email;
     this.password = password;
