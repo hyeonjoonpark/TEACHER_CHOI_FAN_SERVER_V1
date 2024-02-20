@@ -41,11 +41,12 @@ public class User {
   private byte isAdmin;
 
   @Builder
-  public User(String id, String email, String password, String profileImage, String refToken, byte isAdmin) {
+  public User(String id, String email, String password, String profileImage, List<Board> boardList, String refToken, byte isAdmin) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.profileImage = profileImage;
+    this.boardList = boardList;
     this.refToken = refToken;
     this.isAdmin = isAdmin;
   }
