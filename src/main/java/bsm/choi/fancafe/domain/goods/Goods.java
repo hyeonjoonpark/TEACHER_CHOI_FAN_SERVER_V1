@@ -11,38 +11,38 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Goods {
-    @Id
-    @Column(name = "goods_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int goodsId;
-    @Column(name = "goods_name")
-    private String goodsName;
-    @Column(name = "price")
-    private int price;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User sellerId;
+  @Id
+  @Column(name = "goods_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int goodsId;
+  @Column(name = "goods_name")
+  private String goodsName;
+  @Column(name = "price")
+  private int price;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User sellerId;
 
   public void setSellerId(User sellerId) {
     this.sellerId = sellerId;
   }
 
   @Column(name = "goods_date")
-    private LocalDateTime date;
-    @Column(name = "goods_count")
-    private Long count;
+  private LocalDateTime date;
+  @Column(name = "goods_count")
+  private Long count;
 
-    @Builder
-    public Goods(int goodsId, String goodsName, int price, User sellerId, LocalDateTime date, Long count) {
-        this.goodsId = goodsId;
-        this.goodsName = goodsName;
-        this.price = price;
-        this.sellerId = sellerId;
-        this.date = date;
-        this.count = count;
-    }
+  @Builder
+  public Goods(int goodsId, String goodsName, int price, User sellerId, LocalDateTime date, Long count) {
+    this.goodsId = goodsId;
+    this.goodsName = goodsName;
+    this.price = price;
+    this.sellerId = sellerId;
+    this.date = date;
+    this.count = count;
+  }
 
-    public void setCount(Long count) {
-        this.count = count;
-    }
+  public void setCount(Long count) {
+    this.count = count;
+  }
 }

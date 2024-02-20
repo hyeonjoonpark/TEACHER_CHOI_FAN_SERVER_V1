@@ -19,7 +19,7 @@ public class GoodsService {
   private final GoodsRepository goodsRepository;
 
   @Transactional(readOnly = true)
-  public List<Goods> getList() throws GlobalException {
+  public List<Goods> getList() {
     try {
       List<Goods> result = goodsRepository.findAll();
       return result;
@@ -29,7 +29,7 @@ public class GoodsService {
   }
 
   @Transactional
-  public void saveGoods(GoodsUploadRequestDto dto) throws GlobalException {
+  public void saveGoods(GoodsUploadRequestDto dto) {
     try {
       String goodsName = dto.getGoodsName();
       int goodsPrice = dto.getPrice();
