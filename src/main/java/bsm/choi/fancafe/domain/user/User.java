@@ -1,6 +1,7 @@
 package bsm.choi.fancafe.domain.user;
 
 import bsm.choi.fancafe.domain.board.Board;
+import bsm.choi.fancafe.domain.goods.Goods;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,11 +30,23 @@ public class User {
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
   )
   private List<Board> boardList;
+
   public void addBoard(Board board) {
     board.setWriter(this);
     this.boardList.add(board);
   }
 
+  @OneToMany(
+    mappedBy = "goodsId",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true
+  )
+  private List<Goods> sellList;
+
+  public void addGoods(Goods goods) {
+    goods.setSellerId(this);
+    this.sellList.add(goods);
+  }
 
   @Column(name = "ref_token")
   private String refToken;

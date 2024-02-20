@@ -1,5 +1,6 @@
 package bsm.choi.fancafe.domain.goods;
 
+import bsm.choi.fancafe.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,16 +19,21 @@ public class Goods {
     private String goodsName;
     @Column(name = "price")
     private int price;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id")
-    private String sellerId;
-    @Column(name = "goods_date")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User sellerId;
+
+  public void setSellerId(User sellerId) {
+    this.sellerId = sellerId;
+  }
+
+  @Column(name = "goods_date")
     private LocalDateTime date;
     @Column(name = "goods_count")
     private Long count;
 
     @Builder
-    public Goods(int goodsId, String goodsName, int price, String sellerId, LocalDateTime date, Long count) {
+    public Goods(int goodsId, String goodsName, int price, User sellerId, LocalDateTime date, Long count) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.price = price;
