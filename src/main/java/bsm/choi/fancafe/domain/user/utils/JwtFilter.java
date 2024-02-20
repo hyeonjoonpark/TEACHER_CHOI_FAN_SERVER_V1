@@ -1,6 +1,7 @@
 package bsm.choi.fancafe.domain.user.utils;
 
 import bsm.choi.fancafe.domain.user.service.UserService;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,7 +52,8 @@ public class JwtFilter extends OncePerRequestFilter { // 안 보내는 요청에
         }
 
         // UserId 토큰에서 꺼내기
-        String userId = "";
+        String userId = JwtUtil.getUserId(token, secretKey);
+        log.info("userId : {}", userId);
 
         // 권환부여
         UsernamePasswordAuthenticationToken authenticationToken =

@@ -1,17 +1,15 @@
-package bsm.choi.fancafe.domain.goods.entity;
+package bsm.choi.fancafe.domain.goods;
 
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "goods")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GoodsEntity {
+public class Goods {
     @Id
     @Column(name = "goods_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +27,7 @@ public class GoodsEntity {
     private Long count;
 
     @Builder
-    public GoodsEntity(int goodsId, String goodsName, int price, String sellerId, LocalDateTime date, Long count) {
+    public Goods(int goodsId, String goodsName, int price, String sellerId, LocalDateTime date, Long count) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.price = price;

@@ -1,7 +1,6 @@
 package bsm.choi.fancafe.domain.board.presentation.dto.request;
 
-import bsm.choi.fancafe.domain.board.entity.BoardEntity;
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
+import bsm.choi.fancafe.domain.board.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,8 +13,8 @@ public class BoardUploadRequestDto {
     private String content;
     private String id;
 
-    public BoardEntity toEntity(String title, String content, String id) {
-        return BoardEntity.builder()
+    public Board toEntity(String title, String content, String id) {
+        return Board.builder()
                 .title(title)
                 .content(content)
                 .writer(id)

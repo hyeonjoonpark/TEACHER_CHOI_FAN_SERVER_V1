@@ -1,6 +1,6 @@
 package bsm.choi.fancafe.domain.board.presentation;
 
-import bsm.choi.fancafe.domain.board.entity.BoardEntity;
+import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
 import bsm.choi.fancafe.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/board")
@@ -20,8 +19,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public Page<BoardEntity> boardList(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "5") int size) {
+    public Page<Board> boardList(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "5") int size) {
         int adjustedPage = page > 0 ? page - 1 : 0; // 페이지 번호 조정
         PageRequest pageRequest = PageRequest.of(adjustedPage, size);
         return boardService.boardList(pageRequest);
@@ -34,7 +33,7 @@ public class BoardController {
     }
 
     @PutMapping("/like/update")
-    public ResponseEntity<BoardEntity> updateCount(@RequestBody int likeCount) {
+    public ResponseEntity<Board> updateCount(@RequestBody int likeCount) {
         boardService.update(likeCount);
 
         return ResponseEntity.ok().build();
@@ -47,8 +46,8 @@ public class BoardController {
     }
 
     @GetMapping("/list/:id")
-    public List<BoardEntity> boardList(@RequestParam String id) {
-        List<BoardEntity> result = boardService.getBoardList(id);
+    public List<Board> boardList(@RequestParam String id) {
+        List<Board> result = boardService.getBoardList(id);
         return result;
     }
 }

@@ -11,6 +11,11 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    public static String getUserId(String token, String secretKey) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+                .getBody().get("id", String.class);
+    }
+
     // 만료되었는지 확인하는 메서드
     public static boolean isExpired(String token, String secretKey) {
         return Jwts.parser()

@@ -2,6 +2,7 @@ package bsm.choi.fancafe.domain.user.presentation;
 
 import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
+import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto dto) {
+    public void signUp(@RequestBody SignUpRequestDto dto) {
         authService.register(dto);
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public String  login(@RequestBody LoginRequestDto loginRequestDto) {
-        String result = authService.login(loginRequestDto);
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        LoginResponseDto result = authService.login(loginRequestDto);
         return result;
     }
 }

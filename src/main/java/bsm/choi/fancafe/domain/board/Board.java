@@ -1,6 +1,5 @@
-package bsm.choi.fancafe.domain.board.entity;
+package bsm.choi.fancafe.domain.board;
 
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Table(name = "board")
 @Getter @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardEntity {
+public class Board {
     @Id
     @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +29,7 @@ public class BoardEntity {
     private int viewCount;
 
     @Builder
-    public BoardEntity(int boardId, String title, String content, String writer, LocalDateTime writeDate, int likeCount, int viewCount) {
+    public Board(int boardId, String title, String content, String writer, LocalDateTime writeDate, int likeCount, int viewCount) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;

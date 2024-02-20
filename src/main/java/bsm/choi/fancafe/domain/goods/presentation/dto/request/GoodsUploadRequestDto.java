@@ -1,13 +1,11 @@
 package bsm.choi.fancafe.domain.goods.presentation.dto.request;
 
-import bsm.choi.fancafe.domain.goods.entity.GoodsEntity;
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
+import bsm.choi.fancafe.domain.goods.Goods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +15,8 @@ public class GoodsUploadRequestDto {
     private int price;
     private String sellerId;
 
-    public GoodsEntity toEntity() {
-        return GoodsEntity.builder()
+    public Goods toEntity() {
+        return Goods.builder()
                 .goodsName(this.goodsName)
                 .price(this.price)
                 .count(1L)

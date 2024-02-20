@@ -1,6 +1,6 @@
 package bsm.choi.fancafe.domain.board.service;
 
-import bsm.choi.fancafe.domain.board.entity.BoardEntity;
+import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
 import bsm.choi.fancafe.domain.board.repository.BoardRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,7 +21,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional(readOnly = true)
-    public Page<BoardEntity> boardList(Pageable pageable) {
+    public Page<Board> boardList(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
@@ -40,7 +39,7 @@ public class BoardService {
         String writer = dto.getId();
 
         try {
-            BoardEntity board = dto.toEntity(title, content, writer);
+            Board board = dto.toEntity(title, content, writer);
             boardRepository.save(board);
         } catch(GlobalException e) {
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -50,9 +49,9 @@ public class BoardService {
     @Transactional
     public void update(int boardId) {
         try {
-            Optional<BoardEntity> optionalBoard = boardRepository.findById(boardId);
+            Optional<Board> optionalBoard = boardRepository.findById(boardId);
             if (optionalBoard.isPresent()) {
-                BoardEntity board = optionalBoard.get();
+                Board board = optionalBoard.get();
                 board.setLikeCount(board.getLikeCount() + 1);
                 boardRepository.save(board);
             }
@@ -61,7 +60,7 @@ public class BoardService {
         }
     }
 
-    public List<BoardEntity> getBoardList(String id) {
+    public List<Board> getBoardList(String id) {
         return boardRepository.findBoardByUserId(id);
     }
 

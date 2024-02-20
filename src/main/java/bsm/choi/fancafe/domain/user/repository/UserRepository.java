@@ -1,6 +1,6 @@
 package bsm.choi.fancafe.domain.user.repository;
 
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
+import bsm.choi.fancafe.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,14 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    UserEntity findByEmail(String email);
-
-    boolean existsByIdAndEmail(String id, String email);
+    User findByEmail(String email);
 
     @Query("select u.id, u.email, u.isAdmin " +
-            "from UserEntity u " +
+            "from User u " +
             "where u.id=:id")
     Optional<Object[]> findUserById(@Param("id") String id);
 

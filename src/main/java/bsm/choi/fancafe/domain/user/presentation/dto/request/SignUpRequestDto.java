@@ -1,6 +1,6 @@
 package bsm.choi.fancafe.domain.user.presentation.dto.request;
 
-import bsm.choi.fancafe.domain.user.entity.UserEntity;
+import bsm.choi.fancafe.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +16,9 @@ public class SignUpRequestDto {
     private String email;
     private String password;
 
-    public UserEntity toEntity(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public User toEntity(BCryptPasswordEncoder bCryptPasswordEncoder) {
         String encodedPassword = bCryptPasswordEncoder.encode(password);
-        return UserEntity.builder()
+        return User.builder()
                 .id(id)
                 .email(email)
                 .password(encodedPassword)
