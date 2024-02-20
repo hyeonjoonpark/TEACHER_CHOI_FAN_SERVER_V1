@@ -10,13 +10,13 @@ import java.util.List;
 
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    @Query("select b.title, b.content, b.likeCount, b.viewCount, b.writeDate, b.writer " +
-            "from Board b " +
-            "where b.boardId = :id")
-    Object findDetailById(@Param("id") Long id);
+  @Query("select b.title, b.content, b.likeCount, b.viewCount, b.writeDate, b.writer " +
+    "from Board b " +
+    "where b.boardId = :id")
+  Object findDetailById(@Param("id") Long id);
 
-    @Query("select b " +
-            "from Board b, User u " +
-            "where b.writer=u.id and b.writer=:id")
-    List<Board> findBoardByUserId(@RequestParam("id") String id);
+  @Query("select b " +
+    "from Board b, User u " +
+    "where b.writer=u.id and b.writer=:id")
+  List<Board> findBoardByUserId(@RequestParam("id") String id);
 }

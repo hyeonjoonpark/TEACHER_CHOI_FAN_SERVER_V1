@@ -20,35 +20,35 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+  @Value("${jwt.secret}")
+  private String secretKey;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(
-                        auth -> auth
-                                .requestMatchers(
-                                        HttpMethod.POST,
-                                        "/api/auth/signUp",
-                                        "/api/auth/login"
-                                ).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/**").authenticated()
-                                .anyRequest().permitAll()
-                )
-                .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+      .authorizeHttpRequests(
+        auth -> auth
+          .requestMatchers(
+            HttpMethod.POST,
+            "/api/auth/signUp",
+            "/api/auth/login"
+          ).permitAll()
+          .requestMatchers(HttpMethod.POST, "/**").authenticated()
+          .anyRequest().permitAll()
+      )
+      .csrf(AbstractHttpConfigurer::disable)
+      .httpBasic(AbstractHttpConfigurer::disable)
+      .formLogin(AbstractHttpConfigurer::disable)
+      .cors(Customizer.withDefaults())
+      .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+  }
 }
