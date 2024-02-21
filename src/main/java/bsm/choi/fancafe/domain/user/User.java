@@ -9,7 +9,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "user")
+@Entity
+@Table
 public class User {
   @Id
   @Column(name = "user_id")
@@ -25,8 +26,9 @@ public class User {
   private String profileImage;
 
   @OneToMany(
-    mappedBy = "boardId", // boardId랑 매핑
+    mappedBy = "users", // boardId랑 매핑
     cascade = CascadeType.ALL,
+    // default : fetch: FetchType.LAZY
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
   )
   private List<Board> boardList;
@@ -37,8 +39,9 @@ public class User {
   }
 
   @OneToMany(
-    mappedBy = "goodsId",
+    mappedBy = "users",
     cascade = CascadeType.ALL,
+    // default : fetch: FetchType.LAZY
     orphanRemoval = true
   )
   private List<Goods> sellList;
@@ -50,17 +53,15 @@ public class User {
 
   @Column(name = "ref_token")
   private String refToken;
-  @Column(name = "is_admin")
-  private byte isAdmin;
 
   @Builder
-  public User(String id, String email, String password, String profileImage, List<Board> boardList, String refToken, byte isAdmin) {
+  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.profileImage = profileImage;
     this.boardList = boardList;
+    this.sellList = sellList;
     this.refToken = refToken;
-    this.isAdmin = isAdmin;
   }
 }

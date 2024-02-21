@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "board")
+@Entity
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,10 +20,10 @@ public class Board {
   @Column(name = "content")
   private String content;
 
-
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "user_id")
   private User writer;
+
   public void setWriter(User writer) {
     this.writer = writer;
   }
@@ -52,5 +52,16 @@ public class Board {
 
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
+  }
+
+  @ManyToOne(optional = false)
+  private User users;
+
+  public User getUsers() {
+    return users;
+  }
+
+  public void setUsers(User users) {
+    this.users = users;
   }
 }

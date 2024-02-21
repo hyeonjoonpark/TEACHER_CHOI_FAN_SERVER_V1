@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "goods")
 @Table(name = "goods")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,5 +44,16 @@ public class Goods {
 
   public void setCount(Long count) {
     this.count = count;
+  }
+
+  @ManyToOne(optional = false)
+  private User users;
+
+  public User getUsers() {
+    return users;
+  }
+
+  public void setUsers(User users) {
+    this.users = users;
   }
 }
