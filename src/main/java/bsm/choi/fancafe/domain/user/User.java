@@ -54,8 +54,10 @@ public class User {
   @Column(name = "ref_token")
   private String refToken;
 
+  private String role;
+
   @Builder
-  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken) {
+  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, String role) {
     this.id = id;
     this.email = email;
     this.password = password;
@@ -63,5 +65,6 @@ public class User {
     this.boardList = boardList;
     this.sellList = sellList;
     this.refToken = refToken;
+    this.role = role;
   }
 }

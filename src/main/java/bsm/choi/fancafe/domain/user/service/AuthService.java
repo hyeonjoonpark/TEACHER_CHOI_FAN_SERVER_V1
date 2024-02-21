@@ -68,7 +68,7 @@ public class AuthService {
 
       String token = jwtUtil.createJwt(id, email, secretKey, exprTime);
 
-      return new LoginResponseDto(token, id);
+      return new LoginResponseDto(token, id, email);
 
     } catch (GlobalException e) {
       throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
