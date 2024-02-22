@@ -32,6 +32,13 @@ public class Goods {
   @Column(name = "goods_count")
   private Long count;
 
+  public void setCount(Long count) {
+    this.count = count;
+  }
+
+  @ManyToOne(optional = false)
+  private User users;
+
   @Builder
   public Goods(int goodsId, String goodsName, int price, User sellerId, LocalDateTime date, Long count) {
     this.goodsId = goodsId;
@@ -40,20 +47,5 @@ public class Goods {
     this.sellerId = sellerId;
     this.date = date;
     this.count = count;
-  }
-
-  public void setCount(Long count) {
-    this.count = count;
-  }
-
-  @ManyToOne(optional = false)
-  private User users;
-
-  public User getUsers() {
-    return users;
-  }
-
-  public void setUsers(User users) {
-    this.users = users;
   }
 }

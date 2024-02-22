@@ -22,7 +22,7 @@ public class Board {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User writer;
+  private User users;
 
   public void setWriter(User writer) {
     this.writer = writer;
@@ -36,11 +36,11 @@ public class Board {
   private int viewCount;
 
   @Builder
-  public Board(int boardId, String title, String content, User writer, LocalDateTime writeDate, int likeCount, int viewCount) {
+  public Board(int boardId, String title, String content, User users, LocalDateTime writeDate, int likeCount, int viewCount) {
     this.boardId = boardId;
     this.title = title;
     this.content = content;
-    this.writer = writer;
+    this.users = users;
     this.writeDate = writeDate;
     this.likeCount = likeCount;
     this.viewCount = viewCount;
@@ -48,20 +48,5 @@ public class Board {
 
   public void setLikeCount(int likeCount) {
     this.likeCount = likeCount;
-  }
-
-  public void setViewCount(int viewCount) {
-    this.viewCount = viewCount;
-  }
-
-  @ManyToOne(optional = false)
-  private User users;
-
-  public User getUsers() {
-    return users;
-  }
-
-  public void setUsers(User users) {
-    this.users = users;
   }
 }

@@ -51,7 +51,6 @@ public class User {
     this.sellList.add(goods);
   }
 
-  @Column(name = "ref_token")
   private String refToken;
 
   private String role;
