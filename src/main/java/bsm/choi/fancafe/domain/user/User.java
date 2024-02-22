@@ -53,10 +53,10 @@ public class User {
 
   private String refToken;
 
-  private String role;
+  private RoleType role;
 
   @Builder
-  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, String role) {
+  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
     this.id = id;
     this.email = email;
     this.password = password;
