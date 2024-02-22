@@ -21,10 +21,10 @@ public class Goods {
   private int price;
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User sellerId;
+  private User users;
 
-  public void setSellerId(User sellerId) {
-    this.sellerId = sellerId;
+  public void setUsers(User users) {
+    this.users = users;
   }
 
   @Column(name = "goods_date")
@@ -36,15 +36,13 @@ public class Goods {
     this.count = count;
   }
 
-  @ManyToOne(optional = false)
-  private User users;
 
   @Builder
-  public Goods(int goodsId, String goodsName, int price, User sellerId, LocalDateTime date, Long count) {
+  public Goods(int goodsId, String goodsName, int price, User users, LocalDateTime date, Long count) {
     this.goodsId = goodsId;
     this.goodsName = goodsName;
     this.price = price;
-    this.sellerId = sellerId;
+    this.users = users;
     this.date = date;
     this.count = count;
   }

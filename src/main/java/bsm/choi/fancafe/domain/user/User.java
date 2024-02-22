@@ -34,7 +34,7 @@ public class User {
   private List<Board> boardList;
 
   public void addBoard(Board board) {
-    board.setWriter(this);
+    board.setUsers(this);
     this.boardList.add(board);
   }
 
@@ -47,7 +47,7 @@ public class User {
   private List<Goods> sellList;
 
   public void addGoods(Goods goods) {
-    goods.setSellerId(this);
+    goods.setUsers(this);
     this.sellList.add(goods);
   }
 

@@ -24,7 +24,7 @@ public class Board {
   @JoinColumn(name = "user_id")
   private User users;
 
-  public void setWriter(User users) {
+  public void setUsers(User users) {
     this.users = users;
   }
 
