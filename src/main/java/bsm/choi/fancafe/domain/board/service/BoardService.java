@@ -3,6 +3,8 @@ package bsm.choi.fancafe.domain.board.service;
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
 import bsm.choi.fancafe.domain.board.repository.BoardRepository;
+import bsm.choi.fancafe.domain.user.User;
+import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class BoardService {
 
   private final BoardRepository boardRepository;
+  private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
   public Page<Board> boardList(Pageable pageable) {
@@ -36,6 +39,12 @@ public class BoardService {
   public void save(BoardUploadRequestDto dto) {
     try {
       Board board = dto.toEntity();
+      User user = userRepository.findById(dto.getWriterId())
+        .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
+      board.setWriter(user); // User 객체를 Board에 설정
+      user.addBoard(board); // User의 게시글 목록에 Board를 추가
+
       boardRepository.save(board);
     } catch (GlobalException e) {
       throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -56,6 +65,7 @@ public class BoardService {
     }
   }
 
+  @Transactional(readOnly = true)
   public List<Board> getBoardList(String id) {
     return boardRepository.findBoardByUserId(id);
   }

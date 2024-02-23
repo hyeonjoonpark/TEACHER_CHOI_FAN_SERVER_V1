@@ -21,7 +21,7 @@ public class Board {
   private String content;
 
   @ManyToOne
-  @JoinColumn(name = "writer")
+  @JoinColumn(name = "user_id")
   private User writer;
 
   public void setWriter(User writer) {

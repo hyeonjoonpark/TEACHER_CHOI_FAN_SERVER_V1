@@ -21,7 +21,7 @@ public class GoodsUploadRequestDto {
       .goodsName(goodsName)
       .price(price)
       .count(1L)
-      .sellerId(sellerId)
+      .seller(sellerId)
       .date(LocalDateTime.now())
       .build();
   }

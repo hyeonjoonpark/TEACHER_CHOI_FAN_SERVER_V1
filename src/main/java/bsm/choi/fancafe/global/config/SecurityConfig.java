@@ -41,8 +41,8 @@ public class SecurityConfig {
       .csrf(AbstractHttpConfigurer::disable)
       .httpBasic(AbstractHttpConfigurer::disable)
       .formLogin(AbstractHttpConfigurer::disable)
-      .cors(Customizer.withDefaults())
-      .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
+      .cors(Customizer.withDefaults());
+//      .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

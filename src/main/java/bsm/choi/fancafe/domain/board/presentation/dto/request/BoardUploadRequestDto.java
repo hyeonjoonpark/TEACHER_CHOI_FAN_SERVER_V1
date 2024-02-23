@@ -12,13 +12,12 @@ import java.time.LocalDateTime;
 public class BoardUploadRequestDto {
   private String title;
   private String content;
-  private User writerId;
+  private String writerId;
 
   public Board toEntity() {
     return Board.builder()
       .title(title)
       .content(content)
-      .writer(writerId)
       .viewCount(0)
       .likeCount(0)
       .writeDate(LocalDateTime.now())
