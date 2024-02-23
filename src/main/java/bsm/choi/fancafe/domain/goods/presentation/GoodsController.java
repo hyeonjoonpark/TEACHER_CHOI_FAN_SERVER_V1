@@ -21,8 +21,7 @@ public class GoodsController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
+    public void goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
         goodsService.saveGoods(dto);
-        return ResponseEntity.ok().build();
     }
 }

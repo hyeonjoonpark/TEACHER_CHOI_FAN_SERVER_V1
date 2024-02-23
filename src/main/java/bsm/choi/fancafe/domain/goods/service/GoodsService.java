@@ -3,10 +3,13 @@ package bsm.choi.fancafe.domain.goods.service;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
 import bsm.choi.fancafe.domain.goods.repository.GoodsRepository;
+import bsm.choi.fancafe.domain.user.User;
+import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoodsService {
   private final GoodsRepository goodsRepository;
+  private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
   public List<Goods> getList() {
@@ -43,8 +47,18 @@ public class GoodsService {
       }
       // 동일한 상품이 존재하지 않는 경우, 새로운 상품을 저장합니다.
       Goods goods = dto.toEntity();
+
+      User user = userRepository.findById(dto.getSellerId())
+        .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
+      // TODO : user가 null인 현상 수정
+
+      goods.setSeller(user);
+      user.addGoods(goods);
+
       goodsRepository.save(goods);
     } catch (GlobalException e) {
+      System.out.println(e.getMessage());
       throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
   }

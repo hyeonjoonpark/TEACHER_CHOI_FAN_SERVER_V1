@@ -20,14 +20,14 @@ public class Goods {
   @Column(name = "price")
   private int price;
   @ManyToOne
-  @JoinColumn(name = "seller")
+  @JoinColumn(name = "user_id")
   private User seller;
 
   public void setSeller(User seller) {
     this.seller = seller;
   }
 
-  @Column(name = "goods_date")
+  @Column(name = "upload_date")
   private LocalDateTime date;
   @Column(name = "goods_count")
   private Long count;
