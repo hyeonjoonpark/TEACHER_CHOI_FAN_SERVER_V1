@@ -22,10 +22,10 @@ public class Board {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User users;
+  private User user;
 
-  public void setUsers(User users) {
-    this.users = users;
+  public void setUsers(User user) {
+    this.user = user;
   }
 
   @Column(name = "write_date")
@@ -36,11 +36,11 @@ public class Board {
   private int viewCount;
 
   @Builder
-  public Board(int boardId, String title, String content, User users, LocalDateTime writeDate, int likeCount, int viewCount) {
+  public Board(int boardId, String title, String content, User user, LocalDateTime writeDate, int likeCount, int viewCount) {
     this.boardId = boardId;
     this.title = title;
     this.content = content;
-    this.users = users;
+    this.user = user;
     this.writeDate = writeDate;
     this.likeCount = likeCount;
     this.viewCount = viewCount;
