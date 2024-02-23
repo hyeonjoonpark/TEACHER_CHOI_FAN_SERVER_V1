@@ -5,7 +5,6 @@ import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
