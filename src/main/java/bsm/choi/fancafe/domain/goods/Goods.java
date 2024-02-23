@@ -20,11 +20,11 @@ public class Goods {
   @Column(name = "price")
   private int price;
   @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  @JoinColumn(name = "seller")
+  private User seller;
 
-  public void setUsers(User user) {
-    this.user = user;
+  public void setSeller(User seller) {
+    this.seller = seller;
   }
 
   @Column(name = "goods_date")
@@ -38,11 +38,11 @@ public class Goods {
 
 
   @Builder
-  public Goods(int goodsId, String goodsName, int price, User user, LocalDateTime date, Long count) {
+  public Goods(int goodsId, String goodsName, int price, User seller, LocalDateTime date, Long count) {
     this.goodsId = goodsId;
     this.goodsName = goodsName;
     this.price = price;
-    this.user = user;
+    this.seller = seller;
     this.date = date;
     this.count = count;
   }

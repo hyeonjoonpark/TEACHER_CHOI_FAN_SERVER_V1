@@ -26,7 +26,7 @@ public class User {
   private String profileImage;
 
   @OneToMany(
-    mappedBy = "user", // boardId랑 매핑
+    mappedBy = "writer", // boardId랑 매핑
     cascade = CascadeType.ALL,
     // default : fetch: FetchType.LAZY
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
@@ -34,12 +34,12 @@ public class User {
   private List<Board> boardList;
 
   public void addBoard(Board board) {
-    board.setUsers(this);
+    board.setWriter(this);
     this.boardList.add(board);
   }
 
   @OneToMany(
-    mappedBy = "user",
+    mappedBy = "seller",
     cascade = CascadeType.ALL,
     // default : fetch: FetchType.LAZY
     orphanRemoval = true
@@ -47,7 +47,7 @@ public class User {
   private List<Goods> sellList;
 
   public void addGoods(Goods goods) {
-    goods.setUsers(this);
+    goods.setSeller(this);
     this.sellList.add(goods);
   }
 

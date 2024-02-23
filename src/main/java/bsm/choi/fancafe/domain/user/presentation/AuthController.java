@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthService authService;
+  private final AuthService authService;
 
-    @PostMapping("/signUp")
-    public void signUp(@RequestBody SignUpRequestDto dto) {
-        authService.register(dto);
-    }
+  @PostMapping("/signUp")
+  public void signUp(@RequestBody SignUpRequestDto dto) {
+    authService.register(dto);
+  }
 
-    @PostMapping("/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-        LoginResponseDto result = authService.login(loginRequestDto);
-        return result;
-    }
+  @PostMapping("/login")
+  public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+    LoginResponseDto result = authService.login(loginRequestDto);
+    return result;
+  }
 }
