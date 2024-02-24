@@ -3,6 +3,7 @@ package bsm.choi.fancafe.domain.goods.service;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
 import bsm.choi.fancafe.domain.goods.repository.GoodsRepository;
+import bsm.choi.fancafe.domain.user.RoleType;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;

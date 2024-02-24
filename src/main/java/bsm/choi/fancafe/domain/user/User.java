@@ -53,6 +53,7 @@ public class User {
 
   private String refToken;
 
+  @Enumerated(EnumType.STRING)
   private RoleType role;
 
   @Builder
