@@ -16,38 +16,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardService boardService;
+  private final BoardService boardService;
 
-    @GetMapping("/list")
-    public Page<Board> boardList(@RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "5") int size) {
-        int adjustedPage = page > 0 ? page - 1 : 0; // 페이지 번호 조정
-        PageRequest pageRequest = PageRequest.of(adjustedPage, size);
-        return boardService.boardList(pageRequest);
-    }
+  @GetMapping("/list")
+  public Page<Board> boardList(
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "5") int size
+  ) {
+    int adjustedPage = page > 0 ? page - 1 : 0; // 페이지 번호 조정
+    PageRequest pageRequest = PageRequest.of(adjustedPage, size);
+    return boardService.boardList(pageRequest);
+  }
 
-    @GetMapping("/detail")
-    public Object boardDetail(@RequestParam Long id) {
-        Object board = boardService.getDetail(id);
-        return board;
-    }
+  @GetMapping("/detail")
+  public Object boardDetail(@RequestParam Long id) {
+    Object board = boardService.getDetail(id);
+    return board;
+  }
 
-    @PutMapping("/like/update")
-    public ResponseEntity<Board> updateCount(@RequestBody int likeCount) {
-        boardService.update(likeCount);
+  @PutMapping("/like/update")
+  public ResponseEntity<Board> updateCount(@RequestBody int likeCount) {
+    boardService.update(likeCount);
 
-        return ResponseEntity.ok().build();
-    }
+    return ResponseEntity.ok().build();
+  }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Object> boardUpload(@RequestBody BoardUploadRequestDto dto) {
-        boardService.save(dto);
-        return ResponseEntity.ok().build();
-    }
+  @PostMapping("/upload")
+  public ResponseEntity<Object> boardUpload(@RequestBody BoardUploadRequestDto dto) {
+    boardService.save(dto);
+    return ResponseEntity.ok().build();
+  }
 
-    @GetMapping("/list/:id")
-    public List<Board> boardList(@RequestParam String id) {
-        List<Board> result = boardService.getBoardList(id);
-        return result;
-    }
+  @GetMapping("/list/:id")
+  public List<Board> boardList(@RequestParam String id) {
+    List<Board> result = boardService.getBoardList(id);
+    return result;
+  }
 }

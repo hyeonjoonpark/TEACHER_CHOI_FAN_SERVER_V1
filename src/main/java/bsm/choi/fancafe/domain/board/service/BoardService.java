@@ -25,12 +25,24 @@ public class BoardService {
 
   @Transactional(readOnly = true)
   public Page<Board> boardList(Pageable pageable) {
-    return boardRepository.findAll(pageable);
+    try {
+      Page<Board> result =  boardRepository.findAll(pageable); // TODO : 에러 발생
+      return result;
+    } catch (GlobalException e) {
+      throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
+    }
   }
+
+  /*
+  * TODO : Cannot call sendError() after the response has been committed
+  	* at org.apache.catalina.connector.ResponseFacade.checkCommitted(ResponseFacade.java:485) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+  	* at org.apache.catalina.connector.ResponseFacade.sendError(ResponseFacade.java:337) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+  	* 에러 고치기
+  * */
+
 
   @Transactional(readOnly = true)
   public Object getDetail(Long id) {
-    System.out.println("확인");
     return boardRepository.findDetailById(id);
   }
 
