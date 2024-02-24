@@ -2,6 +2,7 @@ package bsm.choi.fancafe.domain.goods.presentation;
 
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
+import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
 import bsm.choi.fancafe.domain.goods.service.GoodsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,8 @@ import java.util.List;
 public class GoodsController {
     private final GoodsService goodsService;
     @GetMapping("/list")
-    public List<Goods> goodsList() {
-        List<Goods> result = goodsService.getList();
+    public List<GoodsResponseDto> goodsList() {
+        List<GoodsResponseDto> result = goodsService.getList();
         return result;
     }
 

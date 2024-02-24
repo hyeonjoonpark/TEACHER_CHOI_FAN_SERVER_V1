@@ -2,19 +2,20 @@ package bsm.choi.fancafe.domain.goods.service;
 
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
+import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
 import bsm.choi.fancafe.domain.goods.repository.GoodsRepository;
-import bsm.choi.fancafe.domain.user.RoleType;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Getter
@@ -24,10 +25,14 @@ public class GoodsService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<Goods> getList() {
+  public List<GoodsResponseDto> getList() {
     try {
-      List<Goods> result = goodsRepository.findAll();
-      return result;
+      List<Goods> goodsData = goodsRepository.findAll();
+      List<GoodsResponseDto> goodsList = goodsData.stream()
+        .map(goods -> new GoodsResponseDto(goods))
+        .collect(Collectors.toList());
+
+      return goodsList;
     } catch (GlobalException e) {
       throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
