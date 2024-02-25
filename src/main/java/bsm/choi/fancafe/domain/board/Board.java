@@ -23,7 +23,7 @@ public class Board {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonBackReference
+//  @JsonBackReference
   private User writer;
 
   public void setWriter(User writer) {

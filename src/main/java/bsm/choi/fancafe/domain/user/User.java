@@ -32,7 +32,7 @@ public class User {
     // default : fetch: FetchType.LAZY
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
   )
-  @JsonManagedReference
+//  @JsonManagedReference
   private List<Board> boardList;
 
   public void addBoard(Board board) {
