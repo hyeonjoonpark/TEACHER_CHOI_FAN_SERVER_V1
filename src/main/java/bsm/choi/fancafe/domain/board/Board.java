@@ -1,6 +1,7 @@
 package bsm.choi.fancafe.domain.board;
 
 import bsm.choi.fancafe.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Board {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonBackReference
   private User writer;
 
   public void setWriter(User writer) {

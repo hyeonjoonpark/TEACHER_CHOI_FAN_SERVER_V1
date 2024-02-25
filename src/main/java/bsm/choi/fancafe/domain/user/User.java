@@ -2,6 +2,7 @@ package bsm.choi.fancafe.domain.user;
 
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.goods.Goods;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class User {
     // default : fetch: FetchType.LAZY
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
   )
+  @JsonManagedReference
   private List<Board> boardList;
 
   public void addBoard(Board board) {
