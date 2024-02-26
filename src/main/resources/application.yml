@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /api
+  port: 9901
 spring:
   jpa:
     hibernate:
