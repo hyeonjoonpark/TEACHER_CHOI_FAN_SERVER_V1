@@ -1,16 +1,15 @@
 server:
   servlet:
     context-path: /api
-  port: 9901
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: phj@3473
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   main:
     allow-bean-definition-overriding: true
 
