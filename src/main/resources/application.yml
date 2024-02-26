@@ -8,7 +8,7 @@ spring:
       ddl-auto: create
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://115.140.87.3:3306/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   main:
