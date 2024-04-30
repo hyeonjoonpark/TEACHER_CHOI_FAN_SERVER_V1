@@ -1,11 +1,9 @@
 package bsm.choi.fancafe.domain.goods.presentation;
 
-import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequest;
 import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
 import bsm.choi.fancafe.domain.goods.service.GoodsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

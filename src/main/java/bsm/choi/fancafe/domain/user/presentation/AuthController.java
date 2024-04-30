@@ -1,6 +1,6 @@
 package bsm.choi.fancafe.domain.user.presentation;
 
-import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequestDto;
+import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequest;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
 import bsm.choi.fancafe.domain.user.service.AuthService;
@@ -19,8 +19,8 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-    LoginResponseDto result = authService.login(loginRequestDto);
+  public LoginResponseDto login(@RequestBody LoginRequest dto) {
+    LoginResponseDto result = authService.login(dto);
     return result;
   }
 }
