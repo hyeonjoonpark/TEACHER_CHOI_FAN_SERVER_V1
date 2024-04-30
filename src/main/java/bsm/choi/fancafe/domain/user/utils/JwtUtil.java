@@ -31,8 +31,6 @@ public class JwtUtil {
         claims.put("id", id);
         claims.put("email", email);
 
-        System.out.println("a");
-
         return Jwts
                 .builder()
                 .setClaims(claims)

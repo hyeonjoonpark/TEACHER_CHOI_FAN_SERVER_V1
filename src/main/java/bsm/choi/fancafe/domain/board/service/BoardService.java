@@ -1,8 +1,8 @@
 package bsm.choi.fancafe.domain.board.service;
 
 import bsm.choi.fancafe.domain.board.Board;
-import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
-import bsm.choi.fancafe.domain.board.presentation.dto.response.BoardListResponseDto;
+import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequest;
+import bsm.choi.fancafe.domain.board.presentation.dto.response.BoardListResponse;
 import bsm.choi.fancafe.domain.board.repository.BoardRepository;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
@@ -27,12 +27,12 @@ public class BoardService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public Page<BoardListResponseDto> boardList(Pageable pageable) {
+  public Page<BoardListResponse> boardList(Pageable pageable) {
     try {
       Page<Board> boardPage =  boardRepository.findAll(pageable);
 
-      List<BoardListResponseDto> boardListResponseDtos = boardPage.stream()
-        .map(BoardListResponseDto::of)
+      List<BoardListResponse> boardListResponseDtos = boardPage.stream()
+        .map(BoardListResponse::of)
         .collect(Collectors.toList());
       return new PageImpl<>(boardListResponseDtos, pageable, boardPage.getTotalElements());
     } catch (GlobalException e) {
@@ -47,10 +47,10 @@ public class BoardService {
 
 
   @Transactional
-  public void save(BoardUploadRequestDto dto) {
+  public void save(BoardUploadRequest dto) {
     try {
       Board board = dto.toEntity();
-      User user = userRepository.findById(dto.getWriterId())
+      User user = userRepository.findById(dto.writerId())
         .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
       board.setWriter(user); // User 객체를 Board에 설정

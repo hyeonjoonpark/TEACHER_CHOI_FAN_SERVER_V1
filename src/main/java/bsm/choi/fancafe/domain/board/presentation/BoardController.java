@@ -1,8 +1,8 @@
 package bsm.choi.fancafe.domain.board.presentation;
 
 import bsm.choi.fancafe.domain.board.Board;
-import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequestDto;
-import bsm.choi.fancafe.domain.board.presentation.dto.response.BoardListResponseDto;
+import bsm.choi.fancafe.domain.board.presentation.dto.request.BoardUploadRequest;
+import bsm.choi.fancafe.domain.board.presentation.dto.response.BoardListResponse;
 import bsm.choi.fancafe.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public class BoardController {
   private final BoardService boardService;
 
   @GetMapping("/list")
-  public Page<BoardListResponseDto> boardList(
+  public Page<BoardListResponse> boardList(
     @RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "5") int size
   ) {
@@ -43,7 +43,7 @@ public class BoardController {
   }
 
   @PostMapping("/upload")
-  public ResponseEntity<Object> boardUpload(@RequestBody BoardUploadRequestDto dto) {
+  public ResponseEntity<Object> boardUpload(@RequestBody BoardUploadRequest dto) {
     boardService.save(dto);
     return ResponseEntity.ok().build();
   }
