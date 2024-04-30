@@ -19,7 +19,7 @@ public class Goods {
   private String goodsName;
   @Column(name = "price")
   private int price;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User seller;
 

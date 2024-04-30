@@ -29,7 +29,6 @@ public class User {
   @OneToMany(
     mappedBy = "writer", // boardId랑 매핑
     cascade = CascadeType.ALL,
-    // default : fetch: FetchType.LAZY
     orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
   )
 //  @JsonManagedReference
@@ -43,7 +42,6 @@ public class User {
   @OneToMany(
     mappedBy = "seller",
     cascade = CascadeType.ALL,
-    // default : fetch: FetchType.LAZY
     orphanRemoval = true
   )
   private List<Goods> sellList;

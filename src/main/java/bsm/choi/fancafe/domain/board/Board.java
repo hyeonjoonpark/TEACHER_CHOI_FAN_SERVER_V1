@@ -21,9 +21,8 @@ public class Board {
   @Column(name = "content")
   private String content;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-//  @JsonBackReference
   private User writer;
 
   public void setWriter(User writer) {
