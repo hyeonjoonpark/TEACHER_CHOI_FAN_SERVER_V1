@@ -1,7 +1,7 @@
 package bsm.choi.fancafe.domain.goods.service;
 
 import bsm.choi.fancafe.domain.goods.Goods;
-import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
+import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequest;
 import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
 import bsm.choi.fancafe.domain.goods.repository.GoodsRepository;
 import bsm.choi.fancafe.domain.user.User;
@@ -39,10 +39,10 @@ public class GoodsService {
   }
 
   @Transactional
-  public void saveGoods(GoodsUploadRequestDto dto) {
+  public void saveGoods(GoodsUploadRequest dto) {
     try {
-      String goodsName = dto.getGoodsName();
-      int goodsPrice = dto.getPrice();
+      String goodsName = dto.goodsName();
+      int goodsPrice = dto.price();
 
       Goods existingGoods = goodsRepository.findByGoodsNameAndPrice(goodsName, goodsPrice);
 
@@ -54,7 +54,7 @@ public class GoodsService {
       // 동일한 상품이 존재하지 않는 경우, 새로운 상품을 저장합니다.
       Goods goods = dto.toEntity();
 
-      User user = userRepository.findById(dto.getSellerId())
+      User user = userRepository.findById(dto.sellerId())
         .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
       // TODO : user가 null인 현상 수정

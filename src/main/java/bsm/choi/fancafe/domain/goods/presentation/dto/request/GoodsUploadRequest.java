@@ -7,14 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class GoodsUploadRequestDto {
-  private String goodsName;
-  private int price;
-  private String sellerId;
-
+public record GoodsUploadRequest(
+  String goodsName,
+  int price,
+  String sellerId
+) {
   public Goods toEntity() {
     return Goods.builder()
       .goodsName(goodsName)

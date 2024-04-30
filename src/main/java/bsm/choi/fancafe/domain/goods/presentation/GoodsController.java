@@ -1,7 +1,7 @@
 package bsm.choi.fancafe.domain.goods.presentation;
 
 import bsm.choi.fancafe.domain.goods.Goods;
-import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequestDto;
+import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequest;
 import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
 import bsm.choi.fancafe.domain.goods.service.GoodsService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class GoodsController {
     }
 
     @PostMapping("/upload")
-    public void goodsUpload(@RequestBody GoodsUploadRequestDto dto) {
+    public void goodsUpload(@RequestBody GoodsUploadRequest dto) {
         goodsService.saveGoods(dto);
     }
 }
