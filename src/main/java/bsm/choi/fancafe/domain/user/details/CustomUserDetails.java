@@ -33,20 +33,48 @@ public class CustomUserDetails implements UserDetails {
         return user.getNickname();
     }
 
+    /**
+     * 계정 만료 여부
+     * true : 만료 안됨
+     * false : 만료
+     * @return
+     */
+
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
+
+    /**
+     * 계정 잠김 여부
+     * true : 잠기지 않음
+     * false : 잠김
+     * @return
+     */
 
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
+    /**
+     * 비밀번호 만료 여부
+     * true : 만료 안됨
+     * false : 만료
+     * @return
+     */
+
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
+
+    /**
+     * 사용자 활성화 여부
+     * ture : 활성화
+     * false : 비활성화
+     * @return
+     */
 
     @Override
     public boolean isEnabled() {
