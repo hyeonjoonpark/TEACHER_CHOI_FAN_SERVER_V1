@@ -1,7 +1,13 @@
 package bsm.choi.fancafe.domain.user.types;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum RoleType {
-  ROLE_STUDENT, // 학생
-  ROLE_TEACHER, // 선생님
-  ROLE_ADMIN // 관리자
+    ROLE_USER("ROLE_USER"),
+    ROLE_ADMIN("ROLE_ADMIN");
+
+    private final String userRole;
 }
