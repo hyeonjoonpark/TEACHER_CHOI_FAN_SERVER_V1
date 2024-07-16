@@ -1,5 +1,6 @@
 package bsm.choi.fancafe.domain.user;
 
+import bsm.choi.fancafe.domain.auth.RefreshToken;
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.user.types.RoleType;
@@ -62,17 +63,18 @@ public class User {
     this.sellList.add(goods);
   }
 
-  private String refToken;
-
   @ElementCollection(targetClass = RoleType.class)
   @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
   @Enumerated(EnumType.STRING)
   @Column(name = "role")
   private Set<RoleType> roles = new HashSet<>();
 
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private RefreshToken refreshToken;
+
 
   @Builder
-  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, Set<RoleType> roles) {
+  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, Set<RoleType> roles, RefreshToken refreshToken) {
     this.uuid = uuid;
     this.email = email;
     this.password = password;
@@ -80,7 +82,7 @@ public class User {
     this.profileImage = profileImage;
     this.boardList = boardList;
     this.sellList = sellList;
-    this.refToken = refToken;
     this.roles = roles;
+    this.refreshToken = refreshToken;
   }
 }
