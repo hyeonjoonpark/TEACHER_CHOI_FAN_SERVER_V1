@@ -20,4 +20,4 @@ spring:
     allow-bean-definition-overriding: true
 
 jwt:
-    secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey!!
+    secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey

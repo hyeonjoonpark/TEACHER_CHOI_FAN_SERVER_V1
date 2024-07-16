@@ -4,9 +4,11 @@ import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,9 +17,13 @@ import java.util.List;
 public class User {
   @Id
   @Column(name = "user_id")
-  private String id;
+  @GeneratedValue
+  private UUID uuid;
+
+  @Email
   private String email;
   private String password;
+
   @Column(
     name = "profile_image",
     columnDefinition = "LONGBLOB"
@@ -54,8 +60,8 @@ public class User {
   private RoleType role;
 
   @Builder
-  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
-    this.id = id;
+  public User(UUID uuid, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
+    this.uuid = uuid;
     this.email = email;
     this.password = password;
     this.profileImage = profileImage;
