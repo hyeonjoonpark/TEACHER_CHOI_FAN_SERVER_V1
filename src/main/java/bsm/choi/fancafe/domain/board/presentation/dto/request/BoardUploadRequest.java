@@ -2,10 +2,6 @@ package bsm.choi.fancafe.domain.board.presentation.dto.request;
 
 import bsm.choi.fancafe.domain.board.Board;
 
-import java.time.LocalDateTime;
-
-
-
 public record BoardUploadRequest(
   String title,
   String content,
@@ -15,9 +11,6 @@ public record BoardUploadRequest(
     return Board.builder()
       .title(title)
       .content(content)
-      .viewCount(0)
-      .likeCount(0)
-      .writeDate(LocalDateTime.now())
       .build();
   }
 }

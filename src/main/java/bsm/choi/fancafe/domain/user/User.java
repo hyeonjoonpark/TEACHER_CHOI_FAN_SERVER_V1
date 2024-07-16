@@ -5,6 +5,7 @@ import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
@@ -24,6 +25,10 @@ public class User {
   @Column(nullable = false, unique = true)
   private String email;
   private String password;
+
+  @Size(max = 10, min = 3)
+  @Column(nullable = false)
+  private String nickname;
 
   @Column(
     name = "profile_image",
@@ -61,10 +66,11 @@ public class User {
   private RoleType role;
 
   @Builder
-  public User(UUID uuid, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
+  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
     this.uuid = uuid;
     this.email = email;
     this.password = password;
+    this.nickname = nickname;
     this.profileImage = profileImage;
     this.boardList = boardList;
     this.sellList = sellList;

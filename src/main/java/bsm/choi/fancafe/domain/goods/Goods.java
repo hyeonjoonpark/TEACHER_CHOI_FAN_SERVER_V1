@@ -28,10 +28,6 @@ public class Goods {
     @CreatedBy
     private User seller;
 
-    @CreatedDate
-    @Column(name = "upload_date")
-    private LocalDate date;
-
     @Setter
     @Column(name = "goods_count")
     private Long count;
