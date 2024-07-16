@@ -2,7 +2,7 @@ package bsm.choi.fancafe.domain.user;
 
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.goods.Goods;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -54,7 +54,8 @@ public class User {
   private RoleType role;
 
   @Builder
-  public User(String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
+  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
+    this.id = id;
     this.email = email;
     this.password = password;
     this.profileImage = profileImage;

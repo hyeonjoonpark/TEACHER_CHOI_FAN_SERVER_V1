@@ -1,9 +1,9 @@
-package bsm.choi.fancafe.domain.user.presentation;
+package bsm.choi.fancafe.domain.auth.presentation;
 
-import bsm.choi.fancafe.domain.user.presentation.dto.request.LoginRequest;
+import bsm.choi.fancafe.domain.auth.presentation.dto.request.LoginRequest;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequestDto;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.LoginResponseDto;
-import bsm.choi.fancafe.domain.user.service.AuthService;
+import bsm.choi.fancafe.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

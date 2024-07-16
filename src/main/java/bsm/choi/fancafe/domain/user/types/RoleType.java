@@ -1,13 +1,12 @@
-package bsm.choi.fancafe.domain.user;
+package bsm.choi.fancafe.domain.user.types;
 
 public enum RoleType {
   USER, // 일반 사용자
-  MANAGER, // 관리자
-  VIP; // 특별회원
+  ADMIN; // 관리자
 
   private static final String PREFIX = "ROLE_";
 
-  public String userRole() {
+  public String getUserRole() {
     return PREFIX + this.name();
   }
 }

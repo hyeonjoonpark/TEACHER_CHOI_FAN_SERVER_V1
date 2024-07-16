@@ -1,4 +1,4 @@
-package bsm.choi.fancafe.domain.user.presentation.dto.request;
+package bsm.choi.fancafe.domain.auth.presentation.dto.request;
 
 public record LoginRequest(
   String id,

@@ -1,4 +1,4 @@
-package bsm.choi.fancafe.domain.user.presentation.dto.response;
+package bsm.choi.fancafe.domain.auth.presentation.dto.response;
 
 import lombok.Builder;
 
