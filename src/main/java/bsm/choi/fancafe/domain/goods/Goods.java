@@ -1,49 +1,49 @@
 package bsm.choi.fancafe.domain.goods;
 
+import bsm.choi.fancafe.domain.goods.type.EventType;
 import bsm.choi.fancafe.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity(name = "goods")
-@Table(name = "goods")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Goods {
-  @Id
-  @Column(name = "goods_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int goodsId;
-  @Column(name = "goods_name")
-  private String goodsName;
-  @Column(name = "price")
-  private int price;
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User seller;
+    @Id
+    @Column(name = "goods_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long goodsId;
+    private String goodsName;
+    private int price;
 
-  public void setSeller(User seller) {
-    this.seller = seller;
-  }
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @CreatedBy
+    private User seller;
 
-  @Column(name = "upload_date")
-  private LocalDateTime date;
-  @Column(name = "goods_count")
-  private Long count;
+    @CreatedDate
+    @Column(name = "upload_date")
+    private LocalDate date;
 
-  public void setCount(Long count) {
-    this.count = count;
-  }
+    @Setter
+    @Column(name = "goods_count")
+    private Long count;
 
+    @Enumerated(EnumType.STRING)
+    private EventType eventType;
 
-  @Builder
-  public Goods(int goodsId, String goodsName, int price, User seller, LocalDateTime date, Long count) {
-    this.goodsId = goodsId;
-    this.goodsName = goodsName;
-    this.price = price;
-    this.seller = seller;
-    this.date = date;
-    this.count = count;
-  }
+    @Builder
+    public Goods(String goodsName, int price, Long count, EventType eventType) {
+        this.goodsName = goodsName;
+        this.price = price;
+        this.count = count;
+        this.eventType = eventType;
+    }
 }

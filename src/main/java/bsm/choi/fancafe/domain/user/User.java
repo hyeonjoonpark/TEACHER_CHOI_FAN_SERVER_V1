@@ -16,9 +16,7 @@ public class User {
   @Id
   @Column(name = "user_id")
   private String id;
-  @Column(name = "email")
   private String email;
-  @Column(name = "password")
   private String password;
   @Column(
     name = "profile_image",
@@ -56,8 +54,7 @@ public class User {
   private RoleType role;
 
   @Builder
-  public User(String id, String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
-    this.id = id;
+  public User(String email, String password, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
     this.email = email;
     this.password = password;
     this.profileImage = profileImage;

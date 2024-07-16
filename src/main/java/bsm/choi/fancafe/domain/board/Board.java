@@ -1,53 +1,41 @@
 package bsm.choi.fancafe.domain.board;
 
 import bsm.choi.fancafe.domain.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Board {
-  @Id
-  @Column(name = "board_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int boardId;
-  @Column(name = "title")
+  @Id @Column(name = "board_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long boardId;
+
   private String title;
-  @Column(name = "content")
   private String content;
 
+  @Setter
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
+  @CreatedBy
   private User writer;
 
-  public void setWriter(User writer) {
-    this.writer = writer;
-  }
+  @CreatedDate private LocalDateTime writeDate;
 
-  @Column(name = "write_date")
-  private LocalDateTime writeDate;
-  @Column(name = "like_count")
-  private int likeCount;
-  @Column(name = "view_count")
-  private int viewCount;
+  @Setter private int likeCount;
+  @Setter private int viewCount;
 
   @Builder
-  public Board(int boardId, String title, String content, User writer, LocalDateTime writeDate, int likeCount, int viewCount) {
-    this.boardId = boardId;
+  public Board(String title, String content, int likeCount, int viewCount) {
     this.title = title;
     this.content = content;
-    this.writer = writer;
-    this.writeDate = writeDate;
     this.likeCount = likeCount;
     this.viewCount = viewCount;
-  }
-
-  public void setLikeCount(int likeCount) {
-    this.likeCount = likeCount;
   }
 }
