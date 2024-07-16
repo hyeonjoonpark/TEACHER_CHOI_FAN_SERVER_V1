@@ -8,7 +8,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -62,11 +64,15 @@ public class User {
 
   private String refToken;
 
+  @ElementCollection(targetClass = RoleType.class)
+  @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
   @Enumerated(EnumType.STRING)
-  private RoleType role;
+  @Column(name = "role")
+  private Set<RoleType> roles = new HashSet<>();
+
 
   @Builder
-  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, RoleType role) {
+  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, String refToken, Set<RoleType> roles) {
     this.uuid = uuid;
     this.email = email;
     this.password = password;
@@ -75,6 +81,6 @@ public class User {
     this.boardList = boardList;
     this.sellList = sellList;
     this.refToken = refToken;
-    this.role = role;
+    this.roles = roles;
   }
 }
