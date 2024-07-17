@@ -1,23 +1,22 @@
-server:
-  servlet:
-    context-path: /api
-
-  ssl:
-    key-store: keystore.p12
-    key-store-type: PKCS12
-    key-store-password: phj@3473
-
 spring:
   jpa:
     hibernate:
       ddl-auto: create
+    generate-ddl: true
+    show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://115.140.87.3:3306/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DB_LOCAL_HOST}/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_LOCAL_USERNAME}
+    password: ${DB_LOCAL_PASSWORD}
   main:
     allow-bean-definition-overriding: true
+  data:
+    rest:
+      base-path: /api
+    redis:
+      host: ${REDIS_LOCAL_HOST}
+      port: ${REDIS_LOCAL_PORT}
 
 jwt:
     secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
