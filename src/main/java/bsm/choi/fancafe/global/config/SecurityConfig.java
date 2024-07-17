@@ -9,7 +9,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -17,29 +19,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @Value("${jwt.secret}")
-  private String secretKey;
+    @Value("${jwt.secret}")
+    private String secretKey;
 
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-      .authorizeHttpRequests(
-        auth -> auth
-          .requestMatchers("/**").permitAll()
-          .anyRequest().permitAll()
-      )
-      .csrf(AbstractHttpConfigurer::disable)
-      .httpBasic(AbstractHttpConfigurer::disable)
-      .formLogin(AbstractHttpConfigurer::disable)
-      .cors(Customizer.withDefaults());
+    @Bean
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(
+                        auth -> auth
+                                .requestMatchers("/**").permitAll()
+                                .anyRequest().permitAll()
+                ).
+                sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
-    return http.build();
-  }
+
+        return http.build();
+    }
 }
