@@ -17,6 +17,15 @@ spring:
     redis:
       host: ${REDIS_LOCAL_HOST}
       port: ${REDIS_LOCAL_PORT}
+server:
+  servlet:
+    session:
+      cookie:
+        name: JSESSIONID
+
+session:
+  store-type: redis
+  redis: fancafe:session
 
 jwt:
     secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
