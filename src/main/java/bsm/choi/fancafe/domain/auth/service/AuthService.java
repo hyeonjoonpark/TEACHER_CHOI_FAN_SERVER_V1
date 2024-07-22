@@ -1,16 +1,12 @@
 package bsm.choi.fancafe.domain.auth.service;
 
-import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.auth.presentation.dto.request.LoginRequest;
-import bsm.choi.fancafe.domain.user.presentation.dto.request.SignUpRequest;
+import bsm.choi.fancafe.domain.auth.presentation.dto.request.SignUpRequest;
 import bsm.choi.fancafe.domain.auth.presentation.dto.response.LoginResponse;
-import bsm.choi.fancafe.domain.auth.utils.JwtUtil;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
-import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

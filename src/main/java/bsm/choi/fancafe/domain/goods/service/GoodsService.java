@@ -1,7 +1,7 @@
 package bsm.choi.fancafe.domain.goods.service;
 
 import bsm.choi.fancafe.domain.goods.presentation.dto.request.GoodsUploadRequest;
-import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponseDto;
+import bsm.choi.fancafe.domain.goods.presentation.dto.response.GoodsResponse;
 import bsm.choi.fancafe.domain.goods.repository.GoodsRepository;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class GoodsService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<GoodsResponseDto> getList() {
+  public List<GoodsResponse> getList() {
     return null;
   }
 
