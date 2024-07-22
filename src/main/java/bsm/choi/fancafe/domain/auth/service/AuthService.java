@@ -11,6 +11,7 @@ import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -26,7 +27,7 @@ public class AuthService {
   private final Long ACCESS_TOKEN_EXPIRED_TIME = 1000 * 60 * 60L;
   private final Long REFRESH_TOKEN_EXPIRED_TIME = 1000 * 60 * 60 * 24 * 7L;
 
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final PasswordEncoder passwordEncoder;
   private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@gmail.com";
   private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 

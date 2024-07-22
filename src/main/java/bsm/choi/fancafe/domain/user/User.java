@@ -19,70 +19,73 @@ import java.util.UUID;
 @Entity
 @Table
 public class User {
-  @Id
-  @Column(name = "user_id")
-  @GeneratedValue
-  private UUID uuid;
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue
+    private UUID uuid;
 
-  @Email
-  @Column(nullable = false, unique = true)
-  private String email;
-  private String password;
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
+    private String password;
 
-  @Size(max = 10, min = 3)
-  @Column(nullable = false)
-  private String nickname;
+    @Size(max = 10, min = 3)
+    @Column(nullable = false)
+    private String nickname;
 
-  @Column(
-    name = "profile_image",
-    columnDefinition = "LONGBLOB"
-  )
-  private String profileImage;
+    @Column(
+            name = "profile_image",
+            columnDefinition = "LONGBLOB"
+    )
+    private String profileImage;
 
-  @OneToMany(
-    mappedBy = "writer", // boardId랑 매핑
-    cascade = CascadeType.ALL,
-    orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
-  )
-  private List<Board> boardList;
+    @OneToMany(
+            mappedBy = "writer", // boardId랑 매핑
+            cascade = CascadeType.ALL,
+            orphanRemoval = true // User 객체 삭제시 Board 객체도 삭제
+    )
+    private List<Board> boardList;
 
-  public void addBoard(Board board) {
-    board.setWriter(this);
-    this.boardList.add(board);
-  }
+    public void addBoard(Board board) {
+        board.setWriter(this);
+        this.boardList.add(board);
+    }
 
-  @OneToMany(
-    mappedBy = "seller",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true
-  )
-  private List<Goods> sellList;
+    @OneToMany(
+            mappedBy = "seller",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Goods> sellList;
 
-  public void addGoods(Goods goods) {
-    goods.setSeller(this);
-    this.sellList.add(goods);
-  }
+    public void addGoods(Goods goods) {
+        goods.setSeller(this);
+        this.sellList.add(goods);
+    }
 
-  @ElementCollection(targetClass = RoleType.class)
-  @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-  @Enumerated(EnumType.STRING)
-  @Column(name = "role")
-  private Set<RoleType> roles = new HashSet<>();
+    // RoleType 열거형의 컬렉션이 user_roles 테이블에 저장
+    // 엔티티의 컬렉션 필드가 기본 엔티티와 별도로 저장됨
+    @ElementCollection(targetClass = RoleType.class)
+    // user_roles 테이블이 user_id 컬럼을 통해 User 엔티티와 조인됨
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Set<RoleType> roles = new HashSet<>();
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private RefreshToken refreshToken;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RefreshToken refreshToken;
 
 
-  @Builder
-  public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, Set<RoleType> roles, RefreshToken refreshToken) {
-    this.uuid = uuid;
-    this.email = email;
-    this.password = password;
-    this.nickname = nickname;
-    this.profileImage = profileImage;
-    this.boardList = boardList;
-    this.sellList = sellList;
-    this.roles = roles;
-    this.refreshToken = refreshToken;
-  }
+    @Builder
+    public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, Set<RoleType> roles, RefreshToken refreshToken) {
+        this.uuid = uuid;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.boardList = boardList;
+        this.sellList = sellList;
+        this.roles = roles;
+        this.refreshToken = refreshToken;
+    }
 }

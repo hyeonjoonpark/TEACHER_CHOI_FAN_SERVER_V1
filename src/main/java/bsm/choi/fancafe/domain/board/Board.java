@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "content"),
-        @Index(columnList = "writer"),
         @Index(columnList = "hashTag")
 })
 public class Board {
