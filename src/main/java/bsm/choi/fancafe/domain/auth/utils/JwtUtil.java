@@ -40,9 +40,8 @@ public class JwtUtil {
                 .get("codeNumber", String.class);
     }
 
-    public static String createJwt(String id, String email, String secretKey, Long exprTime) {
+    public static String createJwt(String email, String secretKey, Long exprTime) {
         Claims claims = Jwts.claims();
-        claims.put("id", id);
         claims.put("email", email);
 
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);

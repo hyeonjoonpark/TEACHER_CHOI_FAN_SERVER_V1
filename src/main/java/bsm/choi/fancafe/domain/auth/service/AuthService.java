@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.regex.Pattern;
 
@@ -35,9 +36,8 @@ public class AuthService {
 
   }
 
+  @Transactional
   public LoginResponse login(LoginRequest dto) throws GlobalException {
-    String email = dto.email();
-
     return null;
   }
 }

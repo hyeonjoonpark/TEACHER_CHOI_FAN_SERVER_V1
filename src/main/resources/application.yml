@@ -17,6 +17,7 @@ spring:
     redis:
       host: ${REDIS_LOCAL_HOST}
       port: ${REDIS_LOCAL_PORT}
+      connect-timeout: 6
 
 jwt:
     secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
