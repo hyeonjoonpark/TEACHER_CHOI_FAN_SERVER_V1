@@ -8,8 +8,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.id.UUIDGenerator;
 
 import java.util.HashSet;
 import java.util.List;
