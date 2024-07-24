@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtUtil {
@@ -25,7 +26,7 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public static String getCodeNumber(String token, String secretKey) {
+    public static String getUserId(String token, String secretKey) {
         // base64 인코딩된 secretKey 문자열을 디코딩합니다.
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         // 디코딩된 secretKey 바이트 배열로부터 SecretKey 인스턴스를 생성합니다.
@@ -37,12 +38,12 @@ public class JwtUtil {
                 .build() // 파서 설정을 완료합니다.
                 .parseClaimsJws(token)
                 .getBody()
-                .get("codeNumber", String.class);
+                .get("userId", String.class);
     }
 
-    public static String createJwt(String email, String secretKey, Long exprTime) {
+    public static String createJwt(UUID uuid, String secretKey, Long exprTime) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
+        claims.put("userId", uuid);
 
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         SecretKey key = Keys.hmacShaKeyFor(decodedKey);
