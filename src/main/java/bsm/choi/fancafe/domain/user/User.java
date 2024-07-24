@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.UUIDGenerator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,8 +22,13 @@ import java.util.UUID;
 @Table
 public class User {
     @Id
-    @Column(name = "user_id")
-    @GeneratedValue
+    @Column(
+            name = "user_id",
+            updatable = false,
+            unique = true,
+            nullable = false
+    )
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
     @Email
@@ -77,8 +84,7 @@ public class User {
 
 
     @Builder
-    public User(UUID uuid, String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, Set<RoleType> roles, RefreshToken refreshToken) {
-        this.uuid = uuid;
+    public User(String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, Set<RoleType> roles, RefreshToken refreshToken) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
