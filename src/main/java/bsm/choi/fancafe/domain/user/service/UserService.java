@@ -15,7 +15,6 @@ public class UserService {
     private final UserRepository userRepository;
     @Transactional(readOnly = true)
     public Optional<Object[]> getInfo(String id) {
-        Optional<Object[]> result = userRepository.findUserById(id);
-        return result;
+        return null;
     }
 }

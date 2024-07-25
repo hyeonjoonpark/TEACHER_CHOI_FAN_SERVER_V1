@@ -34,7 +34,7 @@ public class User {
     private String email;
     private String password;
 
-    @Size(max = 10, min = 3)
+    @Size(max = 12, min = 3)
     @Column(nullable = false)
     private String nickname;
 
@@ -89,7 +89,7 @@ public class User {
         this.profileImage = profileImage;
         this.boardList = boardList;
         this.sellList = sellList;
-        this.roles = roles;
+        this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
         this.refreshToken = refreshToken;
     }
 }

@@ -1,22 +1,22 @@
 package bsm.choi.fancafe.domain.auth.presentation.dto.request;
 
 import bsm.choi.fancafe.domain.user.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
 public record SignUpRequest(
-  UUID id,
   String email,
-  String password
+  String password,
+  String nickname
 ) {
 
-    public User toEntity(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        String encodedPassword = bCryptPasswordEncoder.encode(password);
+    public User toEntity(PasswordEncoder passwordEncoder) {
+        String encodedPassword = passwordEncoder.encode(password);
         return User.builder()
-                .uuid(id)
                 .email(email)
                 .password(encodedPassword)
+                .nickname(nickname)
                 .build();
     }
 }

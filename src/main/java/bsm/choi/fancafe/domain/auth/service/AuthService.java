@@ -6,17 +6,17 @@ import bsm.choi.fancafe.domain.auth.presentation.dto.response.LoginResponse;
 import bsm.choi.fancafe.domain.auth.utils.JwtUtil;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.details.CustomUserDetailService;
-import bsm.choi.fancafe.domain.user.details.CustomUserDetails;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -27,12 +27,12 @@ public class AuthService {
   @Value("${jwt.secret}")
   private String secretKey;
 
-  private final Long ACCESS_TOKEN_EXPIRED_TIME = 1000 * 60 * 60L;
-  private final Long REFRESH_TOKEN_EXPIRED_TIME = 1000 * 60 * 60 * 24 * 7L;
+  private static final Long ACCESS_TOKEN_EXPIRED_TIME = 1000 * 60 * 60L;
+  private static final Long REFRESH_TOKEN_EXPIRED_TIME = 1000 * 60 * 60 * 24 * 7L;
 
   private final PasswordEncoder passwordEncoder;
   private final CustomUserDetailService userDetailService;
-  private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@gmail.com";
+  private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@gmail.com$";
   private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
   public static boolean validate(String email) {
@@ -40,8 +40,21 @@ public class AuthService {
   }
 
   @Transactional
-  public void register(SignUpRequest dto) throws GlobalException {
+  public ResponseEntity<?> register(SignUpRequest dto) throws GlobalException {
+    String email = dto.email();
 
+    if (userRepository.findByEmail(email).isPresent()) {
+      throw new GlobalException(ErrorCode.USER_ALREADY_EXIST);
+    }
+
+    if (!validate(email)) {
+      throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
+    }
+
+    User user = dto.toEntity(passwordEncoder);
+    userRepository.save(user);
+
+    return ResponseEntity.status(HttpStatus.OK).body("성공적으로 회원가입 되었습니다");
   }
 
   @Transactional
@@ -59,6 +72,6 @@ public class AuthService {
     String accessToken = JwtUtil.createJwt(user.getUuid(), secretKey, ACCESS_TOKEN_EXPIRED_TIME);
     String refreshToken = JwtUtil.createJwt(user.getUuid(), secretKey, REFRESH_TOKEN_EXPIRED_TIME);
 
-    return null;
+    return new LoginResponse(accessToken, refreshToken);
   }
 }

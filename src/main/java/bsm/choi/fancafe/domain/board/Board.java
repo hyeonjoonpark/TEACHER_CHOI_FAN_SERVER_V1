@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {
-        @Index(columnList = "title"),
-        @Index(columnList = "content"),
-        @Index(columnList = "hashTag")
-})
+//@Table(indexes = {
+//        @Index(columnList = "title"),
+//        @Index(columnList = "content"),
+//        @Index(columnList = "hashTag")
+//})
 public class Board {
   @Id @Column(name = "board_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long boardId;

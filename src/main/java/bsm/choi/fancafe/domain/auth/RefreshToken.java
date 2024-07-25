@@ -15,6 +15,8 @@ import org.springframework.data.redis.core.TimeToLive;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RefreshToken {
     @Id
+    private String id;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -23,14 +25,16 @@ public class RefreshToken {
     private Long expiresIn;
 
     @Builder
-    public RefreshToken(User user, String token, Long expiresIn) {
+    public RefreshToken(String id, User user, String token, Long expiresIn) {
+        this.id = id;
         this.user = user;
         this.token = token;
         this.expiresIn = expiresIn;
     }
 
-    public static RefreshToken from(User user, String token, Long expiresIn) {
+    public static RefreshToken from(String id, User user, String token, Long expiresIn) {
         return RefreshToken.builder()
+                .id(id)
                 .user(user)
                 .token(token)
                 .expiresIn(expiresIn / 1000L)

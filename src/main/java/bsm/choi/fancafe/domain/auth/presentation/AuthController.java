@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth", produces = "application/json; charset=utf8")
 @RequiredArgsConstructor
 public class AuthController {
   private final AuthService authService;
@@ -18,7 +18,7 @@ public class AuthController {
   @PostMapping("/signUp")
   public ResponseEntity<?> signUp(@RequestBody SignUpRequest dto) {
     authService.register(dto);
-    return ResponseEntity.status(HttpStatus.OK).body("성공적으로 회원가입 되었습니다");
+    return ResponseEntity.status(HttpStatus.OK).body("성공적으로 처리되었습니다");
   }
 
   @PostMapping("/login")

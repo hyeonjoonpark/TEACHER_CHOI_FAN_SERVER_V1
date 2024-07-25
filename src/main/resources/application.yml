@@ -1,7 +1,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     generate-ddl: true
     show-sql: true
   datasource:
@@ -12,8 +12,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
   data:
-    rest:
-      base-path: /api
     redis:
       host: ${REDIS_LOCAL_HOST}
       port: ${REDIS_LOCAL_PORT}
@@ -21,3 +19,7 @@ spring:
 
 jwt:
     secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
+
+server:
+  servlet:
+    context-path: /api
