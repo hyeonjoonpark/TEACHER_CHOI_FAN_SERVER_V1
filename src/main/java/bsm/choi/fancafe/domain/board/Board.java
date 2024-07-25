@@ -16,18 +16,18 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-//@Table(indexes = {
-//        @Index(columnList = "title"),
-//        @Index(columnList = "content"),
-//        @Index(columnList = "hashTag")
-//})
+@Table(indexes = {
+        @Index(columnList = "title"),
+        @Index(columnList = "content"),
+        @Index(columnList = "hash_tag")
+})
 public class Board {
   @Id @Column(name = "board_id") @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long boardId;
 
-  @Column(length = 100)
+  @Column(name = "title",length = 100)
   private String title;
-  @Column(length = 1000)
+  @Column(name = "content", length = 1000)
   private String content;
 
   @Setter
@@ -53,6 +53,7 @@ public class Board {
   @Setter @ColumnDefault("0") private int likeCount;
   @Setter @ColumnDefault("0") private int viewCount;
 
+  @Column(name = "hash_tag")
   private String hashTag;
 
   @Builder

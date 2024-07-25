@@ -9,6 +9,8 @@ spring:
     url: jdbc:mysql://${DB_LOCAL_HOST}/fancafe?serverTimezone=UTC&characterEncoding=UTF-8
     username: ${DB_LOCAL_USERNAME}
     password: ${DB_LOCAL_PASSWORD}
+
+
   main:
     allow-bean-definition-overriding: true
   data:
