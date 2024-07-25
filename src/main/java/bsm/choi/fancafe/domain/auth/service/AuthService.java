@@ -11,8 +11,6 @@ import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +38,7 @@ public class AuthService {
   }
 
   @Transactional
-  public ResponseEntity<?> register(SignUpRequest dto) throws GlobalException {
+  public void register(SignUpRequest dto) throws GlobalException {
     String email = dto.email();
 
     if (userRepository.findByEmail(email).isPresent()) {
@@ -53,8 +51,6 @@ public class AuthService {
 
     User user = dto.toEntity(passwordEncoder);
     userRepository.save(user);
-
-    return ResponseEntity.status(HttpStatus.OK).body("성공적으로 회원가입 되었습니다");
   }
 
   @Transactional
