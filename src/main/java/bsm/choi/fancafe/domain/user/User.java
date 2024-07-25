@@ -36,7 +36,7 @@ public class User {
 
     @Size(max = 12, min = 3)
     @Column(nullable = false)
-    private String nickname;
+    private String name;
 
     @Column(
             name = "profile_image",
@@ -82,10 +82,10 @@ public class User {
 
 
     @Builder
-    public User(String email, String password, String nickname, String profileImage, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
+    public User(String email, String password, String name, String profileImage, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.name = name;
         this.profileImage = profileImage;
         this.boardList = boardList;
         this.sellList = sellList;

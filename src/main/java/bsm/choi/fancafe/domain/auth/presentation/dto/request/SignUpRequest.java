@@ -3,12 +3,10 @@ package bsm.choi.fancafe.domain.auth.presentation.dto.request;
 import bsm.choi.fancafe.domain.user.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.UUID;
-
 public record SignUpRequest(
   String email,
   String password,
-  String nickname
+  String name
 ) {
 
     public User toEntity(PasswordEncoder passwordEncoder) {
@@ -16,7 +14,7 @@ public record SignUpRequest(
         return User.builder()
                 .email(email)
                 .password(encodedPassword)
-                .nickname(nickname)
+                .name(name)
                 .build();
     }
 }
