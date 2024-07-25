@@ -2,6 +2,7 @@ package bsm.choi.fancafe.domain.user;
 
 import bsm.choi.fancafe.domain.auth.RefreshToken;
 import bsm.choi.fancafe.domain.board.Board;
+import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
@@ -54,6 +55,18 @@ public class User {
     public void addBoard(Board board) {
         board.setWriter(this);
         this.boardList.add(board);
+    }
+
+    @OneToMany(
+            mappedBy = "commentWriterId",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Comment> commentList;
+
+    public void addComment(Comment comment) {
+        comment.setCommentWriterId(this);
+        this.commentList.add(comment);
     }
 
     @OneToMany(

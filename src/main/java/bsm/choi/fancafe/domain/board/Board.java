@@ -1,5 +1,6 @@
 package bsm.choi.fancafe.domain.board;
 
+import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,6 +35,18 @@ public class Board {
   @JoinColumn(name = "user_id")
   @CreatedBy
   private User writer;
+
+  @OneToMany(
+          mappedBy = "boardId",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true
+  )
+  private List<Comment> comments;
+
+  public void addComment(Comment comment) {
+    comment.setBoardId(this);
+    this.comments.add(comment);
+  }
 
   @CreatedDate private LocalDateTime writeDate;
 
