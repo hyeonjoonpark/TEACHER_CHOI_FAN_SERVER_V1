@@ -4,6 +4,7 @@ import bsm.choi.fancafe.domain.auth.RefreshToken;
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.goods.Goods;
+import bsm.choi.fancafe.domain.user.types.GradeType;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -90,6 +91,10 @@ public class User {
     @Column(name = "role")
     private Set<RoleType> roles = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GradeType gradeType;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private RefreshToken refreshToken;
 
@@ -103,6 +108,7 @@ public class User {
         this.boardList = boardList;
         this.sellList = sellList;
         this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
+        this.gradeType = GradeType.NEW;
         this.refreshToken = refreshToken;
     }
 }
