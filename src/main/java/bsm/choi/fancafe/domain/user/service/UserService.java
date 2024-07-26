@@ -36,7 +36,7 @@ public class UserService {
                                 .name(user.getName())
                                 .profileImage(user.getProfileImage() == null ? DEFAULT_PROFILE_IMAGE : user.getProfileImage())
                                 .grade(
-                                        user.getGradeType().equals(GradeType.NEW) ? "신입"
+                                        user.getGradeType().equals(GradeType.NEW) ? "신규"
                                                 : user.getGradeType().equals(GradeType.VIP) ? GradeType.VIP.toString()
                                                 : "팬클럽 회장"
                                 )
