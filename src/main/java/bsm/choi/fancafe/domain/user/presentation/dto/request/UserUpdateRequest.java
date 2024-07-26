@@ -1,6 +1,5 @@
 package bsm.choi.fancafe.domain.user.presentation.dto.request;
 
-import bsm.choi.fancafe.domain.user.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
