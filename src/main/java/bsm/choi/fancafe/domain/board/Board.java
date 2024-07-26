@@ -27,7 +27,7 @@ public class Board {
 
   @Column(name = "title",length = 100)
   private String title;
-  @Column(name = "content", length = 1000)
+  @Column(name = "content")
   private String content;
 
   @Setter

@@ -1,6 +1,5 @@
 package bsm.choi.fancafe.domain.auth.utils;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -26,24 +25,27 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public static String getUserId(String token, String secretKey) {
+    public static UUID getUserId(String token, String secretKey) {
         // base64 인코딩된 secretKey 문자열을 디코딩합니다.
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         // 디코딩된 secretKey 바이트 배열로부터 SecretKey 인스턴스를 생성합니다.
         SecretKey originalKey = Keys.hmacShaKeyFor(decodedKey);
 
         // secretKey를 SecretKey 인스턴스로 사용하여 새 API를 사용합니다.
-        return Jwts.parserBuilder()
+        String userId = Jwts.parserBuilder()
                 .setSigningKey(originalKey)
                 .build() // 파서 설정을 완료합니다.
                 .parseClaimsJws(token)
                 .getBody()
                 .get("userId", String.class);
+
+        // userId를 UUID로 변환하여 반환합니다.
+        return UUID.fromString(userId);
     }
 
     public static String createJwt(UUID uuid, String secretKey, Long exprTime) {
         Claims claims = Jwts.claims();
-        claims.put("userId", uuid);
+        claims.put("userId", uuid.toString());
 
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         SecretKey key = Keys.hmacShaKeyFor(decodedKey);

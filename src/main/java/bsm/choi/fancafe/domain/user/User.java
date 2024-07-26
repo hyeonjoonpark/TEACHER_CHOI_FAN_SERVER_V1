@@ -8,6 +8,7 @@ import bsm.choi.fancafe.domain.user.types.GradeType;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -25,25 +26,27 @@ public class User {
     @Column(
             name = "user_id",
             updatable = false,
-            unique = true,
-            nullable = false
+            unique = true
     )
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
     @Email
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
+    @NotNull
     private String email;
+    @NotNull
     private String password;
 
     @Size(max = 12, min = 3)
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
     @Column(
             name = "profile_image",
             columnDefinition = "LONGBLOB"
     )
+    @NotNull
     private String profileImage;
 
     @OneToMany(
@@ -92,7 +95,7 @@ public class User {
     private Set<RoleType> roles = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotNull
     private GradeType gradeType;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -100,15 +103,22 @@ public class User {
 
 
     @Builder
-    public User(String email, String password, String name, String profileImage, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
+    public User(String email, String password, String name, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.profileImage = profileImage;
+        this.profileImage = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png"; // Default 프로필 이미지
         this.boardList = boardList;
         this.sellList = sellList;
         this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
         this.gradeType = GradeType.NEW;
         this.refreshToken = refreshToken;
+    }
+
+    public void update(String email, String password, String profileImage, String name) {
+        this.email = email;
+        this.password = password;
+        this.profileImage = profileImage;
+        this.name = name;
     }
 }
