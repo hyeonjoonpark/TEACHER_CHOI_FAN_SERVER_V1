@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class UserService {
     private final UserRepository userRepository;
-    private final String DEFAULT_PROFILE_IMAGE = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png";
+    private static final String DEFAULT_PROFILE_IMAGE = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png";
 
     @Transactional(readOnly = true)
     public List<UserListResponse> readAll() {
