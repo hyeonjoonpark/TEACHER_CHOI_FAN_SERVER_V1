@@ -1,8 +1,10 @@
 package bsm.choi.fancafe.domain.auth.utils;
 
+import bsm.choi.fancafe.global.redis.presentation.dao.RedisDao;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -11,7 +13,9 @@ import java.util.Date;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
+    private final RedisDao redisDao;
     // isExpired 메서드 구현
     public static boolean isExpired(String token, String secretKey) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
