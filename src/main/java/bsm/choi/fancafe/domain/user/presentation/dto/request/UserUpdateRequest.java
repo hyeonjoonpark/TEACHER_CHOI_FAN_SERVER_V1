@@ -12,7 +12,6 @@ import java.io.Serializable;
  */
 @Builder
 public record UserUpdateRequest(
-        @NotBlank String token,
         @Email String email,
         String password,
         @Size(min = 3, max = 12) String name,

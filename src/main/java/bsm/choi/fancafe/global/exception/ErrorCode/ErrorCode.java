@@ -12,6 +12,7 @@ public enum ErrorCode {
   USER_NOT_FOUND(404, "USER-404-1", "사용자를 찾을 수 없습니다"),
   TOKEN_EXPIRED(404, "USER-404-2", "토큰을 찾을 수 없습니다"),
   USER_ALREADY_EXIST(409, "USER-409-1", "이미 존재하는 사용자입니다"),
+  INVAILD_TOKEN(498, "USER-498-1", "토큰이 옳지 않습니다"),
 
   // BOARD
   BOARD_NOT_FOUND(404, "BOARD-404-1", "게시물을 찾을 수 없습니다"),

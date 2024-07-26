@@ -38,7 +38,7 @@ public class User {
     @NotNull
     private String password;
 
-    @Size(max = 12, min = 3)
+    @Size(max = 12, min = 2)
     @NotNull
     private String name;
 
