@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @PutMapping("/update/profile")
-    public ResponseEntity<?> updateProfile(@RequestHeader String token, @RequestBody UserUpdateRequest dto) {
-        userService.update(token, dto);
+    public ResponseEntity<?> updateProfile(@RequestBody UserUpdateRequest dto) {
+        userService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).body("프로필 수정이 정상적으로 완료되었습니다");
     }
 }

@@ -45,7 +45,8 @@ public class UserService {
     }
 
     @Transactional
-    public void update(String token, UserUpdateRequest dto) {
+    public void update(UserUpdateRequest dto) {
+        String token = dto.token();
         UUID uuid = JwtUtil.getUserId(token, secret);
         User user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
