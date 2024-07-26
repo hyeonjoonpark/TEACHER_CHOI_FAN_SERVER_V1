@@ -29,7 +29,8 @@ public class UserService {
                                 .grade(
                                         user.getGradeType().equals(GradeType.NEW) ? "신입"
                                                 : user.getGradeType().equals(GradeType.VIP) ? GradeType.VIP.toString()
-                                                : "팬클럽 회장")
+                                                : "팬클럽 회장"
+                                )
                                 .build()
                 ).toList();
     }
