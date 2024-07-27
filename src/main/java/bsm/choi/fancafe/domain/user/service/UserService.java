@@ -1,15 +1,11 @@
 package bsm.choi.fancafe.domain.user.service;
 
-import bsm.choi.fancafe.domain.auth.utils.JwtUtil;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.presentation.dto.request.UserUpdateRequest;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.UserDetailResponse;
 import bsm.choi.fancafe.domain.user.presentation.dto.response.UserListResponse;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.domain.user.types.GradeType;
-import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
-import bsm.choi.fancafe.global.exception.GlobalException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -49,49 +44,13 @@ public class UserService {
 
     // User 정보 조회
     @Transactional(readOnly = true)
-    public UserDetailResponse read(String userEmail, HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
-        
-        if(authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new GlobalException(ErrorCode.INVAILD_TOKEN);
-        }
-        
-        String token = authorization.split(" ")[1];
-        UUID uuid = JwtUtil.getUserId(token, secret);
-        
-        String userId = userRepository.findUserIdByEmail(userEmail);
-        
-        if (userId == null || !userId.equals(uuid.toString())) {
-            throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
-        }
-
-        User user = userRepository.findByUuid(uuid)
-                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
-
-        return UserDetailResponse.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .gradeType(user.getGradeType())
-                .profileImage(user.getProfileImage())
-                .build();
+    public UserDetailResponse read() {
+        return null;
     }
 
     // 프로필 수정
     @Transactional
-    public void update(UserUpdateRequest dto, HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
+    public void update(UserUpdateRequest dto) {
 
-        if(authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new GlobalException(ErrorCode.INVAILD_TOKEN);
-        }
-
-        String token = authorization.split(" ")[1];
-
-        UUID uuid = JwtUtil.getUserId(token, secret);
-        User user = userRepository.findByUuid(uuid)
-                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
-
-        user.update(dto.email(), dto.password(), dto.profileImage(), dto.name());
-        userRepository.save(user);
     }
 }

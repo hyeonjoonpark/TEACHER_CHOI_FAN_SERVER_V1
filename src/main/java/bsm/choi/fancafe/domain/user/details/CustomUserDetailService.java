@@ -2,6 +2,8 @@ package bsm.choi.fancafe.domain.user.details;
 
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
+import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
+import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
         return new CustomUserDetails(user);
     }
 }
