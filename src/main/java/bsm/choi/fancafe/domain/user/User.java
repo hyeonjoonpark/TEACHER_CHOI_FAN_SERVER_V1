@@ -46,7 +46,6 @@ public class User {
             name = "profile_image",
             columnDefinition = "LONGBLOB"
     )
-    @NotNull
     private String profileImage;
 
     @OneToMany(
@@ -107,7 +106,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.profileImage = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png"; // Default 프로필 이미지
+        this.profileImage = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png";
         this.boardList = boardList;
         this.sellList = sellList;
         this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
