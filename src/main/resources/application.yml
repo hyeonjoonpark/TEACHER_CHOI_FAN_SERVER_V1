@@ -10,7 +10,6 @@ spring:
     username: ${DB_LOCAL_USERNAME}
     password: ${DB_LOCAL_PASSWORD}
 
-
   main:
     allow-bean-definition-overriding: true
   data:
