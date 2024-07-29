@@ -2,6 +2,7 @@ package bsm.choi.fancafe.domain.notification.service;
 
 import bsm.choi.fancafe.domain.notification.Notification;
 import bsm.choi.fancafe.domain.notification.presentation.dto.request.NotificationRequest;
+import bsm.choi.fancafe.domain.notification.presentation.dto.response.NotificationReceivedResponse;
 import bsm.choi.fancafe.domain.notification.repository.NotificationRepository;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
@@ -11,14 +12,35 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
 
     private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
+
+    // 내가 받은 알림 조회
+    @Transactional(readOnly = true)
+    public List<NotificationReceivedResponse> receivedResponses(String uuid) {
+        List<Notification> notifications = notificationRepository.findByReceiverUuid(UUID.fromString(uuid));
+
+        // Notification 객체를 NotificationReceivedResponse 객체로 변환
+        return notifications.stream()
+                .map(notification -> NotificationReceivedResponse.builder()
+                        .senderName(notification.getReceiver().getName())
+                        .senderProfileImage(notification.getReceiver().getProfileImage())
+                        .message(notification.getMessage())
+                        .isRead(notification.getIsRead())
+                        .build()
+                )
+                .collect(Collectors.toList());
+    }
+
 
     @Transactional
     public void sendNotification(NotificationRequest dto) {
@@ -31,7 +53,7 @@ public class NotificationService {
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         System.out.println("sender = " + sender);
-        
+
         User receiver = userRepository.findByEmail(dto.receiverEmail())
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
