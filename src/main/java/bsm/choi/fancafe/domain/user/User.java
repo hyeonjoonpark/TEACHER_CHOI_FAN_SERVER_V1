@@ -4,6 +4,7 @@ import bsm.choi.fancafe.domain.auth.RefreshToken;
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.goods.Goods;
+import bsm.choi.fancafe.domain.notification.Notification;
 import bsm.choi.fancafe.domain.user.types.GradeType;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
@@ -83,6 +84,33 @@ public class User {
         goods.setSeller(this);
         this.sellList.add(goods);
     }
+
+    @OneToMany(
+            mappedBy = "sender",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+
+    private List<Notification> sendNotifications;
+
+    public void addSendNotification(Notification notification) {
+        notification.setSender(this);
+        this.sendNotifications.add(notification);
+    }
+
+
+    @OneToMany(
+            mappedBy = "receiver",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Notification> receiveNotifications;
+
+    public void addReceiveNotification(Notification notification) {
+        notification.setReceiver(this);
+        this.receiveNotifications.add(notification);
+    }
+
 
     // RoleType 열거형의 컬렉션이 user_roles 테이블에 저장
     // 엔티티의 컬렉션 필드가 기본 엔티티와 별도로 저장됨
