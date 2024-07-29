@@ -6,17 +6,13 @@ import bsm.choi.fancafe.domain.user.presentation.dto.response.UserDetailResponse
 import bsm.choi.fancafe.domain.user.presentation.dto.response.UserListResponse;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.domain.user.types.GradeType;
-import bsm.choi.fancafe.global.utils.FileUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
