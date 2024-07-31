@@ -1,4 +1,4 @@
-package bsm.choi.fancafe.global.config;
+package bsm.choi.fancafe.global.config.jpa;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

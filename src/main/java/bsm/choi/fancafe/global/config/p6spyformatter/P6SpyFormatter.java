@@ -1,4 +1,4 @@
-package bsm.choi.fancafe.global.config;
+package bsm.choi.fancafe.global.config.p6spyformatter;
 import com.p6spy.engine.common.ConnectionInformation;
 import com.p6spy.engine.event.JdbcEventListener;
 import com.p6spy.engine.spy.P6SpyOptions;

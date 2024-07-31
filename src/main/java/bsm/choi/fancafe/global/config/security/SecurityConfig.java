@@ -1,4 +1,4 @@
-package bsm.choi.fancafe.global.config;
+package bsm.choi.fancafe.global.config.security;
 
 import bsm.choi.fancafe.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
