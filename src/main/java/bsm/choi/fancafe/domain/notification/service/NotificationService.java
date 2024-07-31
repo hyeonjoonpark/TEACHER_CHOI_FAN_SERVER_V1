@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,10 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     // 내가 받은 알림 조회
-    @Transactional(readOnly = true)
+    @Transactional(
+            readOnly = true,
+            rollbackFor = Exception.class
+    )
     public List<NotificationReceivedResponse> receivedResponses(String uuid) {
         List<Notification> notifications = notificationRepository.findByReceiverUuid(UUID.fromString(uuid));
 
@@ -42,7 +44,7 @@ public class NotificationService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void sendNotification(NotificationRequest dto) {
 
         System.out.println("dto.sender() = " + dto.sender());

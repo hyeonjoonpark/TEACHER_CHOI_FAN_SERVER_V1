@@ -25,7 +25,10 @@ public class UserService {
     private String secret;
 
     // 모든 사용자 조회
-    @Transactional(readOnly = true)
+    @Transactional(
+            readOnly = true,
+            rollbackFor = Exception.class
+    )
     public List<UserListResponse> readAll() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -43,13 +46,16 @@ public class UserService {
     }
 
     // User 정보 조회
-    @Transactional(readOnly = true)
+    @Transactional(
+            readOnly = true,
+            rollbackFor = Exception.class
+    )
     public UserDetailResponse read() {
         return null;
     }
 
     // 프로필 수정
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(UserUpdateRequest dto) {
 
     }

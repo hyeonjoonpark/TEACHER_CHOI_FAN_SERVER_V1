@@ -18,12 +18,15 @@ public class GoodsService {
   private final GoodsRepository goodsRepository;
   private final UserRepository userRepository;
 
-  @Transactional(readOnly = true)
+  @Transactional(
+          readOnly = true,
+          rollbackFor = Exception.class
+  )
   public List<GoodsResponse> getList() {
     return null;
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void saveGoods(GoodsUploadRequest dto) {
 
   }

@@ -38,7 +38,7 @@ public class AuthService {
         return pattern.matcher(email).matches();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void register(SignUpRequest dto) throws GlobalException {
         String email = dto.email();
 
@@ -54,7 +54,7 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public LoginResponse login(LoginRequest dto) throws GlobalException {
         String email = dto.email();
         String password = dto.password();

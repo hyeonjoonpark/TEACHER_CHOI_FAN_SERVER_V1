@@ -26,7 +26,10 @@ public class BoardService {
   private final BoardRepository boardRepository;
   private final UserRepository userRepository;
 
-  @Transactional(readOnly = true)
+  @Transactional(
+          readOnly = true,
+          rollbackFor = Exception.class
+  )
   public Page<BoardListResponse> boardList(Pageable pageable) {
     try {
       Page<Board> boardPage =  boardRepository.findAll(pageable);
@@ -40,13 +43,16 @@ public class BoardService {
     }
   }
 
-  @Transactional(readOnly = true)
+  @Transactional(
+          readOnly = true,
+          rollbackFor = Exception.class
+  )
   public Object getDetail(Long id) {
     return boardRepository.findDetailById(id);
   }
 
 
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void save(BoardUploadRequest dto) {
     try {
       Board board = dto.toEntity();
@@ -62,7 +68,7 @@ public class BoardService {
     }
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void update(int boardId) {
     try {
       Optional<Board> optionalBoard = boardRepository.findById(boardId);
