@@ -1,5 +1,6 @@
 package bsm.choi.fancafe.domain.notification.presentation;
 
+import bsm.choi.fancafe.domain.notification.presentation.dto.NotificationSendResponse;
 import bsm.choi.fancafe.domain.notification.presentation.dto.request.NotificationRequest;
 import bsm.choi.fancafe.domain.notification.presentation.dto.response.NotificationReceivedResponse;
 import bsm.choi.fancafe.domain.notification.service.NotificationService;
@@ -20,6 +21,11 @@ public class NotificationController {
     @GetMapping("/receive/list")
     public List<NotificationReceivedResponse> getReceived(@RequestParam String uuid) {
         return notificationService.receivedResponses(uuid);
+    }
+
+    @GetMapping("/send/list")
+    public List<NotificationSendResponse> getSent(@RequestParam String uuid) {
+        return notificationService.sendResponses(uuid);
     }
 
     @PostMapping("/send")
