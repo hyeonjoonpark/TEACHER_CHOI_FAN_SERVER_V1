@@ -47,6 +47,10 @@ dependencies {
 	// REDIS
 	implementation 'org.springframework.session:spring-session-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// WEB SOCKET
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:stomp-websocket:2.3.3-1'
 }
 
 tasks.named('bootBuildImage') {
