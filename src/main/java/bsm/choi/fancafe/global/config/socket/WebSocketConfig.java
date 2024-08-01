@@ -14,16 +14,16 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) { // (2)
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
 
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) { // (5)
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
 
     }
 
-    @Override // (6)
+    @Override
     public void configureClientInboundChannel (ChannelRegistration registration){
 
     }
