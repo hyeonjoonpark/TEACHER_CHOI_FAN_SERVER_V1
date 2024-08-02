@@ -39,3 +39,4 @@ out/
 
 ### properties ###
 *.properties
+/src/main/resources/firebase/teacher-fan-bssm-firebase-adminsdk-hmb69-e2fcb68386.json

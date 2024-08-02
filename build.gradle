@@ -51,6 +51,11 @@ dependencies {
 	// WEB SOCKET
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+	// FIREBASE ADMIN
+	// https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.2.0'
+
 }
 
 tasks.named('bootBuildImage') {
