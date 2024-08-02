@@ -19,7 +19,7 @@ spring:
       connect-timeout: 6
 
 fcm:
-  firebase_config_path: firebase/teacher-fan-bssm-firebase-adminsdk-hmb69-e2fcb68386.json
+  firebase_config_path: ${FCM_JSON_FILE}
 
 jwt:
     secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
