@@ -37,10 +37,10 @@ public class Comment {
     private String comment;
 
     @CreationTimestamp
-    private LocalDateTime createTime = LocalDateTime.now();
+    private LocalDateTime createTime;
 
     @UpdateTimestamp
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private LocalDateTime updateTime;
 
     @Builder
     public Comment(Board boardId, User commentWriterId, String comment) {

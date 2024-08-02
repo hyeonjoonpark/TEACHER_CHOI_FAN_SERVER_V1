@@ -5,8 +5,9 @@ import bsm.choi.fancafe.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -30,11 +31,7 @@ public class Board {
   @Column(name = "content")
   private String content;
 
-  @Setter
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  @CreatedBy
-  private User writer;
+
 
   @OneToMany(
           mappedBy = "boardId",
@@ -48,7 +45,17 @@ public class Board {
     this.comments.add(comment);
   }
 
-  @CreatedDate private LocalDateTime writeDate;
+  @CreationTimestamp
+  private LocalDateTime writeDate;
+
+  @Setter
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  @CreatedBy
+  private User writer;
+
+  @UpdateTimestamp
+  private LocalDateTime lastModifiedDate;
 
   @Setter @ColumnDefault("0") private int likeCount;
   @Setter @ColumnDefault("0") private int viewCount;
