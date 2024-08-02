@@ -9,9 +9,9 @@ import bsm.choi.fancafe.domain.user.types.GradeType;
 import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,15 +33,22 @@ public class User {
     private UUID uuid;
 
     @Email
-    @Column(unique = true)
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String email;
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
     @Size(max = 12, min = 2)
-    @NotNull
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
+    @Size(min = 6, max = 12, message = "닉네임은 6자 이상 12자 이하여야 합니다")
+    private String nickname;
+
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int point;
 
     @Column(
             name = "profile_image",
@@ -122,7 +129,7 @@ public class User {
     private Set<RoleType> roles = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @Column(nullable = false)
     private GradeType gradeType;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -130,10 +137,12 @@ public class User {
 
 
     @Builder
-    public User(String email, String password, String name, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
+    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.nickname = nickname;
+        this.point = point;
         this.profileImage = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png";
         this.boardList = boardList;
         this.sellList = sellList;
@@ -142,10 +151,11 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
-    public void update(String email, String password, String profileImage, String name) {
+    public void updateProfile(String email, String password, String profileImage, String name, String nickname) {
         this.email = email;
         this.password = password;
         this.profileImage = profileImage;
         this.name = name;
+        this.nickname = nickname;
     }
 }

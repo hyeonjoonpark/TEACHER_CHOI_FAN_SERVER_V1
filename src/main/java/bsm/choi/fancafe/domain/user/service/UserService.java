@@ -50,7 +50,7 @@ public class UserService {
             readOnly = true,
             rollbackFor = Exception.class
     )
-    public UserDetailResponse read() {
+    public UserDetailResponse read(String nickname) {
         return null;
     }
 
