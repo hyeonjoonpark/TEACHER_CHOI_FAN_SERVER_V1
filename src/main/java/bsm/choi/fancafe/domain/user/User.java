@@ -104,12 +104,9 @@ public class User {
     @Column(nullable = false)
     private GradeType gradeType;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private RefreshToken refreshToken;
-
 
     @Builder
-    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList, RefreshToken refreshToken) {
+    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -120,7 +117,6 @@ public class User {
         this.sellList = sellList;
         this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
         this.gradeType = GradeType.NEW;
-        this.refreshToken = refreshToken;
     }
 
     public void updateProfile(String email, String password, String profileImage, String name, String nickname) {
