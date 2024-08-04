@@ -13,14 +13,14 @@ import org.springframework.data.redis.core.TimeToLive;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RefreshToken {
     @Id
-    private String token;
+    private String refreshToken;
 
     @TimeToLive
     private Long expiresIn;
 
     @Builder
-    public RefreshToken(String token, Long expiresIn) {
-        this.token = token;
+    public RefreshToken(String refreshToken, Long expiresIn) {
+        this.refreshToken = refreshToken;
         this.expiresIn = expiresIn;
     }
 }

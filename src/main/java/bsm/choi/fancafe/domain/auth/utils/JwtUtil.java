@@ -16,6 +16,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtUtil {
     private final RedisDao redisDao;
+    private static final String USER_ID_KEY = "userId";
+
     // isExpired 메서드 구현
     public static boolean isExpired(String token, String secretKey) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
@@ -41,7 +43,7 @@ public class JwtUtil {
                 .build() // 파서 설정을 완료합니다.
                 .parseClaimsJws(token)
                 .getBody()
-                .get("userId", String.class);
+                .get(USER_ID_KEY, String.class);
 
         // userId를 UUID로 변환하여 반환합니다.
         return UUID.fromString(userId);
@@ -49,7 +51,7 @@ public class JwtUtil {
 
     public static String createJwt(UUID uuid, String secretKey, Long exprTime) {
         Claims claims = Jwts.claims();
-        claims.put("userId", uuid.toString());
+        claims.put(USER_ID_KEY, uuid.toString());
 
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         SecretKey key = Keys.hmacShaKeyFor(decodedKey);
