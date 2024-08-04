@@ -71,7 +71,7 @@ public class CustomUserDetails implements UserDetails {
 
     /**
      * 사용자 활성화 여부
-     * ture : 활성화
+     * true : 활성화
      * false : 비활성화
      * @return
      */

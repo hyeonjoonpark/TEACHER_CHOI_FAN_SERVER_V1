@@ -26,4 +26,10 @@ public class AuthController {
     public LoginResponse login(@Valid @RequestBody LoginRequest dto) {
         return authService.login(dto);
     }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestHeader("REFRESH_TOKEN") String refreshToken) {
+        String newAccessToken = authService.refresh(refreshToken);
+        return ResponseEntity.status(HttpStatus.OK).body()
+    }
 }

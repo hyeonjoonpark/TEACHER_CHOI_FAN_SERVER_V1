@@ -1,9 +1,9 @@
 package bsm.choi.fancafe.domain.auth.utils;
 
 import bsm.choi.fancafe.global.redis.presentation.dao.RedisDao;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtUtil {
     private final RedisDao redisDao;
-    private static final String USER_ID_KEY = "userId";
+    private static final String USER_ID_KEY = "USERID";
 
     public static boolean isExpired(String token, String secretKey) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
@@ -30,7 +30,25 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public static UUID getUserId(String token, String secretKey) {
+    public static Boolean validateToken(String token) {
+        try {
+            byte[] decodedKey = Base64.getDecoder().decode(secretKey);
+            SecretKey originalKey = Keys.hmacShaKeyFor(decodedKey);
+            Jwts.parserBuilder().setSigningKey(originalKey).build().parseClaimsJws(token);
+            return true;
+        } catch (
+                SignatureException |
+                MalformedJwtException |
+                ExpiredJwtException |
+                UnsupportedJwtException |
+                IllegalArgumentException e
+        ) {
+            return false;
+        }
+
+    }
+
+    public static UUID getUserId(String token) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         SecretKey originalKey = Keys.hmacShaKeyFor(decodedKey);
 

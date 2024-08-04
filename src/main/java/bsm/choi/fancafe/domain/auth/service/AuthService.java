@@ -12,6 +12,7 @@ import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,5 +77,23 @@ public class AuthService {
                 accessToken,
                 refreshToken
         );
+    }
+
+    // AccessToken 재발급
+    @Transactional(
+            readOnly = true,
+            rollbackFor = Exception.class
+    )
+    public String refresh(String refreshToken) {
+        if(JwtUtil.validateToken(refreshToken)) {
+
+        }
+
+        // TODO : fix
+        String newAccessToken = JwtUtil.createJwt(
+                new UsernamePasswordAuthenticationToken()
+        )
+
+        return null;
     }
 }

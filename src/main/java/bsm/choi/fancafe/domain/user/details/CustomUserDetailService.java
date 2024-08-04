@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
@@ -18,6 +20,13 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByName(username)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+        return new CustomUserDetails(user);
+    }
+
+    public UserDetails loadUserById(UUID uuid) throws UsernameNotFoundException {
+        User user = userRepository.findByUuid(uuid)
+                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
         return new CustomUserDetails(user);
     }
 }
