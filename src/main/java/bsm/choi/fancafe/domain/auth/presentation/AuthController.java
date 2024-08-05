@@ -30,6 +30,6 @@ public class AuthController {
     @GetMapping("/refresh")
     public ResponseEntity<?> refresh(@RequestHeader("REFRESH_TOKEN") String refreshToken) {
         String newAccessToken = authService.refresh(refreshToken);
-        return ResponseEntity.status(HttpStatus.OK).body()
+        return ResponseEntity.status(HttpStatus.OK).body(newAccessToken);
     }
 }

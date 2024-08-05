@@ -85,15 +85,6 @@ public class AuthService {
             rollbackFor = Exception.class
     )
     public String refresh(String refreshToken) {
-        if(JwtUtil.validateToken(refreshToken)) {
-
-        }
-
-        // TODO : fix
-        String newAccessToken = JwtUtil.createJwt(
-                new UsernamePasswordAuthenticationToken()
-        )
-
         return null;
     }
 }
