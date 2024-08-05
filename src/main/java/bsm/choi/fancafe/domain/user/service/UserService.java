@@ -6,6 +6,8 @@ import bsm.choi.fancafe.domain.user.presentation.dto.response.UserDetailResponse
 import bsm.choi.fancafe.domain.user.presentation.dto.response.UserListResponse;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.domain.user.types.GradeType;
+import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
+import bsm.choi.fancafe.global.exception.GlobalException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,12 +53,30 @@ public class UserService {
             rollbackFor = Exception.class
     )
     public UserDetailResponse read(String nickname) {
-        return null;
+        User user = userRepository.findByNickname(nickname)
+                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
+        return UserDetailResponse.builder()
+                .name(user.getName())
+                .profileImage(user.getProfileImage())
+                .gradeType(user.getGradeType())
+                .build();
     }
 
     // 프로필 수정
     @Transactional(rollbackFor = Exception.class)
     public void update(UserUpdateRequest dto) {
+        String email = dto.email();
+        String password = dto.password();
+        String name = dto.name();
+        String profileImage = dto.profileImage();
+        String nickname = dto.nickname();
 
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
+        user.updateProfile(email, password, profileImage, name, nickname);
+
+        userRepository.save(user);
     }
 }
