@@ -56,11 +56,7 @@ public class UserService {
         User user = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
-        return UserDetailResponse.builder()
-                .name(user.getName())
-                .profileImage(user.getProfileImage())
-                .gradeType(user.getGradeType())
-                .build();
+        return UserDetailResponse.from(user);
     }
 
     // 프로필 수정
