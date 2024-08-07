@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * DTO for {@link bsm.choi.fancafe.domain.user.User}
@@ -24,7 +25,7 @@ public record UserDetailResponse(
     public static UserDetailResponse from(User user) {
         return UserDetailResponse.builder()
                 .name(user.getName())
-                .profileImage(user.getProfileImage())
+                .profileImage(Arrays.toString(user.getProfileImage()))
                 .gradeType(user.getGradeType())
                 .build();
     }

@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +22,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final CustomUserDetailService customUserDetailService;
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = getTokenFromRequest(request);
-        if (accessToken != null && JwtUtil.validateToken(accessToken)) {
+        if (accessToken != null && JwtUtil.validateToken(accessToken, SECRET_KEY)) {
             UsernamePasswordAuthenticationToken authentication = getAuthenticationFromToken(accessToken);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -42,7 +45,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationFromToken(String token) {
-        UUID userId = JwtUtil.getUserId(token);
+        UUID userId = JwtUtil.getUserId(token, SECRET_KEY);
         UserDetails userDetails = customUserDetailService.loadUserById(userId);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }

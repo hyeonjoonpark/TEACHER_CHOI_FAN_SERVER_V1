@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * DTO for {@link bsm.choi.fancafe.domain.user.User}
@@ -29,7 +30,7 @@ public record UserUpdateRequest(
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .name(user.getName())
-                .profileImage(user.getProfileImage())
+                .profileImage(Arrays.toString(user.getProfileImage()))
                 .nickname(user.getNickname())
                 .build();
     }

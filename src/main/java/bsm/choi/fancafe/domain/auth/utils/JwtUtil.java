@@ -30,7 +30,7 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public static Boolean validateToken(String token) {
+    public static Boolean validateToken(String token, String secretKey) {
         try {
             byte[] decodedKey = Base64.getDecoder().decode(secretKey);
             SecretKey originalKey = Keys.hmacShaKeyFor(decodedKey);
@@ -48,7 +48,7 @@ public class JwtUtil {
 
     }
 
-    public static UUID getUserId(String token) {
+    public static UUID getUserId(String token, String secretKey) {
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
         SecretKey originalKey = Keys.hmacShaKeyFor(decodedKey);
 

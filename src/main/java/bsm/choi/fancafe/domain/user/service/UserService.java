@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,7 +38,7 @@ public class UserService {
                 .map(
                         user -> UserListResponse.builder()
                                 .name(user.getName())
-                                .profileImage(user.getProfileImage() == null ? DEFAULT_PROFILE_IMAGE : user.getProfileImage())
+                                .profileImage(user.getProfileImage() == null ? DEFAULT_PROFILE_IMAGE : Arrays.toString(user.getProfileImage()))
                                 .grade(
                                         user.getGradeType().equals(GradeType.NEW) ? "신규"
                                                 : user.getGradeType().equals(GradeType.VIP) ? GradeType.VIP.toString()
@@ -71,7 +72,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
-        user.updateProfile(email, password, profileImage, name, nickname);
+        user.updateProfile(email, password, profileImage.getBytes(), name, nickname);
 
         userRepository.save(user);
     }
