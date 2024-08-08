@@ -1,11 +1,12 @@
 package bsm.choi.fancafe.domain.fcm.presentation.dto.reqeust;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Builder;
+
+import java.io.Serializable;
 
 @Builder
 public record TopicRequest(
-        @JsonCreator String topic
-) {
+        String topic
+) implements Serializable {
 
 }
