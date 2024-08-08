@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/goods")
+@RequestMapping(value = "/goods", produces = "application/json; charset=utf8")
 @RequiredArgsConstructor
 public class GoodsController {
     private final GoodsService goodsService;

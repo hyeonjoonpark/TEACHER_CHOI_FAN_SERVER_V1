@@ -104,9 +104,11 @@ public class User {
     @Column(nullable = false)
     private GradeType gradeType;
 
+    private String fcmToken;
+
 
     @Builder
-    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList) {
+    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList, String fcmToken) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -117,6 +119,7 @@ public class User {
         this.sellList = sellList;
         this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
         this.gradeType = GradeType.NEW;
+        this.fcmToken = fcmToken;
     }
 
     public void updateProfile(String email, String password, byte[] profileImage, String name, String nickname) {

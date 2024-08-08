@@ -22,7 +22,9 @@ fcm:
   firebase_config_path: firebase/teacher-fan-bssm-firebase-adminsdk-hmb69-e2fcb68386.json
 
 jwt:
-    secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
+  fcm:
+    secret: fcm.notification.secret
+  secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
 
 server:
   servlet:
