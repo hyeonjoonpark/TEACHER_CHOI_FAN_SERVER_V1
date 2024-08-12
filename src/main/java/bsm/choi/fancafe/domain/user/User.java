@@ -1,6 +1,5 @@
 package bsm.choi.fancafe.domain.user;
 
-import bsm.choi.fancafe.domain.auth.RefreshToken;
 import bsm.choi.fancafe.domain.board.Board;
 import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.goods.Goods;
