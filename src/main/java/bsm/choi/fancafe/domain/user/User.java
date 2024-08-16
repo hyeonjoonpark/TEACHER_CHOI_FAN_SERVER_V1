@@ -48,9 +48,6 @@ public class User {
     @ColumnDefault("0")
     private int point;
 
-    @Column(
-            name = "profile_image"
-    )
     @Lob
     private byte[] profileImage;
 
