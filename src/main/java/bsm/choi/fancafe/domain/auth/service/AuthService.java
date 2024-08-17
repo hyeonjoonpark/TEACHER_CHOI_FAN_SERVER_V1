@@ -9,6 +9,7 @@ import bsm.choi.fancafe.domain.user.details.CustomUserDetailService;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
+import bsm.choi.fancafe.global.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final FileUtil fileUtil;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -49,6 +51,8 @@ public class AuthService {
         if (!validate(email)) {
             throw new GlobalException(ErrorCode.BAD_REQUEST_AUTH);
         }
+
+        String profilePictureUrl = fileUtil.handleProfileImage(dto.profileImage());
 
         User user = dto.toEntity(passwordEncoder);
         userRepository.save(user);

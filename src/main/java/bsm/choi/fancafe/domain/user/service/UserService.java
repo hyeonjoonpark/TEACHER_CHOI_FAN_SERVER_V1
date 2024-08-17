@@ -38,7 +38,7 @@ public class UserService {
                 .map(
                         user -> UserListResponse.builder()
                                 .name(user.getName())
-                                .profileImage(user.getProfileImage() == null ? DEFAULT_PROFILE_IMAGE : Arrays.toString(user.getProfileImage()))
+                                .profileImage(user.getProfileImagePath())
                                 .grade(
                                         user.getGradeType().equals(GradeType.NEW) ? "신규"
                                                 : user.getGradeType().equals(GradeType.VIP) ? GradeType.VIP.toString()
@@ -66,13 +66,14 @@ public class UserService {
         String email = dto.email();
         String password = dto.password();
         String name = dto.name();
-        String profileImage = dto.profileImage();
+        String profileImageName = dto.profileImageName();
+        String profileImagePath = dto.profileImagePath();
         String nickname = dto.nickname();
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
-        user.updateProfile(email, password, profileImage.getBytes(), name, nickname);
+        user.updateProfile(email, password, profileImageName, profileImagePath, name, nickname);
 
         userRepository.save(user);
     }

@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * DTO for {@link bsm.choi.fancafe.domain.user.User}
@@ -17,12 +16,13 @@ public record UserUpdateRequest(
         String password,
         @Size(min = 2, max = 12, message = "이름은 2자 이상 12자 이하여야 합니다")
         String name,
-        String profileImage,
+        String profileImageName,
+        String profileImagePath,
         @Size(min = 6, max = 12, message = "닉네임은 6자 이상 12자 이하여야 합니다")
         String nickname
 ) implements Serializable {
-    public static UserUpdateRequest of(String email, String password, String name, String profileImage, String nickname) {
-        return new UserUpdateRequest(email, password, name, profileImage, nickname);
+    public static UserUpdateRequest of(String email, String password, String name, String profileImageName, String profileImagePath, String nickname) {
+        return new UserUpdateRequest(email, password, name, profileImageName, profileImagePath, nickname);
     }
 
     public static UserUpdateRequest from(User user) {
@@ -30,7 +30,8 @@ public record UserUpdateRequest(
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .name(user.getName())
-                .profileImage(Arrays.toString(user.getProfileImage()))
+                .profileImageName(user.getProfileImageName())
+                .profileImagePath(user.getProfileImagePath())
                 .nickname(user.getNickname())
                 .build();
     }

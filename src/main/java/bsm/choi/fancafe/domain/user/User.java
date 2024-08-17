@@ -48,8 +48,8 @@ public class User {
     @ColumnDefault("0")
     private int point;
 
-    @Lob
-    private byte[] profileImage;
+    private String profileImageName;
+    private String profileImagePath;
 
     @OneToMany(
             mappedBy = "writer", // boardId랑 매핑
@@ -102,26 +102,28 @@ public class User {
 
     private String fcmToken;
 
-
     @Builder
-    public User(String email, String password, String name, String nickname, int point, List<Board> boardList, List<Goods> sellList, String fcmToken) {
+    public User(String email, String password, String name, String nickname, int point, String profileImageName, String profileImagePath, List<Board> boardList, List<Comment> commentList, List<Goods> sellList, Set<RoleType> roles, GradeType gradeType, String fcmToken) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
         this.point = point;
-        this.profileImage = "https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Download-Image.png".getBytes();
+        this.profileImageName = profileImageName;
+        this.profileImagePath = profileImagePath;
         this.boardList = boardList;
+        this.commentList = commentList;
         this.sellList = sellList;
-        this.roles.add(RoleType.ROLE_USER); // User 생성 시 자동으로 user_roles 테이블에 저장
-        this.gradeType = GradeType.NEW;
-        this.fcmToken = fcmToken; // FCM 알림을 보내기 위한 Token
+        this.roles = roles;
+        this.gradeType = gradeType;
+        this.fcmToken = fcmToken;
     }
 
-    public void updateProfile(String email, String password, byte[] profileImage, String name, String nickname) {
+    public void updateProfile(String email, String password, String profileImageName, String profileImagePath, String name, String nickname) {
         this.email = email;
         this.password = password;
-        this.profileImage = profileImage;
+        this.profileImageName = profileImageName;
+        this.profileImagePath = profileImagePath;
         this.name = name;
         this.nickname = nickname;
     }
