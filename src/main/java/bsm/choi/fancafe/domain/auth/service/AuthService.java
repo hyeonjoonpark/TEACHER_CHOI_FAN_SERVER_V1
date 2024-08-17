@@ -54,7 +54,7 @@ public class AuthService {
 
         String profilePictureUrl = fileUtil.handleProfileImage(dto.profileImage());
 
-        User user = dto.toEntity(passwordEncoder);
+        User user = dto.toEntity(passwordEncoder, profilePictureUrl);
         userRepository.save(user);
     }
 

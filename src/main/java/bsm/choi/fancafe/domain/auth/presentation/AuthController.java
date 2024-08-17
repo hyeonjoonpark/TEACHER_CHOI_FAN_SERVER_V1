@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest dto) {
+    public ResponseEntity<?> signUp(@Valid @ModelAttribute SignUpRequest dto) {
         authService.register(dto);
         return ResponseEntity.status(HttpStatus.OK).body("성공적으로 회원가입 되었습니다");
     }

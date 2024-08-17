@@ -22,7 +22,7 @@ public record SignUpRequest(
         String nickname,
         MultipartFile profileImage
 ) implements Serializable {
-    public User toEntity(PasswordEncoder passwordEncoder) {
+    public User toEntity(PasswordEncoder passwordEncoder, String profileImagePath) {
         String encodedPassword = passwordEncoder.encode(password);
         return User.builder()
                 .email(email)
@@ -30,7 +30,7 @@ public record SignUpRequest(
                 .name(name)
                 .nickname(nickname)
                 .profileImageName(profileImage.getOriginalFilename())
-                .profileImagePath("uploads/" + profileImage.getOriginalFilename())
+                .profileImagePath(profileImagePath)
                 .build();
     }
 }
