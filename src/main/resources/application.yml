@@ -23,12 +23,7 @@ spring:
       port: ${REDIS_LOCAL_PORT}
       connect-timeout: 6
 
-fcm:
-  firebase_config_path: firebase/teacher-fan-bssm-firebase-adminsdk-hmb69-e2fcb68386.json
-
 jwt:
-  fcm:
-    secret: fcm.notification.secret
   secret: ChoiTeacherFancafeSecurityAuthCertificationSecretKey
 
 file:
