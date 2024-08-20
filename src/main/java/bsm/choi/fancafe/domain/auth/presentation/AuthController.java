@@ -4,6 +4,8 @@ import bsm.choi.fancafe.domain.auth.presentation.dto.request.LoginRequest;
 import bsm.choi.fancafe.domain.auth.presentation.dto.response.LoginResponse;
 import bsm.choi.fancafe.domain.auth.service.AuthService;
 import bsm.choi.fancafe.domain.auth.presentation.dto.request.SignUpRequest;
+import bsm.choi.fancafe.domain.user.presentation.dto.request.UserRoleUpdateRequest;
+import bsm.choi.fancafe.domain.user.types.RoleType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,5 +33,11 @@ public class AuthController {
     public ResponseEntity<?> refresh(@RequestHeader("REFRESH_TOKEN") String refreshToken) {
         String newAccessToken = authService.refresh(refreshToken);
         return ResponseEntity.status(HttpStatus.OK).body(newAccessToken);
+    }
+
+    @PostMapping("/add/user_role")
+    public ResponseEntity<?> addUserRole(@RequestBody UserRoleUpdateRequest dto) {
+        authService.addRole(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto.role() + " " + "권한을 추가하였습니다");
     }
 }

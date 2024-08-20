@@ -90,8 +90,12 @@ public class User {
     // user_roles 테이블이 user_id 컬럼을 통해 User 엔티티와 조인됨
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Setter
     private Set<RoleType> roles = new HashSet<>();
+
+    public void addRole(RoleType role) {
+        this.roles.add(role);
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

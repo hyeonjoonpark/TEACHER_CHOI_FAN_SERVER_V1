@@ -6,6 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+  // AUTH
+  WRONG_ROLE(400, "AUTH-400-1", "옳지 않은 권한입니다"),
+
   // USER
   BAD_REQUEST_AUTH(400, "USER-400-1", "인증 요청정보가 잘못되었습니다"),
   USER_NOT_LOGIN(403, "USER-403-1", "로그인이 되어있지 않은 사용자입니다"),
