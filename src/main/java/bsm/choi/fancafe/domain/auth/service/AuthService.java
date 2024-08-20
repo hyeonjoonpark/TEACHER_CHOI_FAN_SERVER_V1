@@ -6,9 +6,7 @@ import bsm.choi.fancafe.domain.auth.presentation.dto.response.LoginResponse;
 import bsm.choi.fancafe.domain.auth.utils.JwtUtil;
 import bsm.choi.fancafe.domain.user.User;
 import bsm.choi.fancafe.domain.user.details.CustomUserDetailService;
-import bsm.choi.fancafe.domain.user.presentation.dto.request.UserRoleUpdateRequest;
 import bsm.choi.fancafe.domain.user.repository.UserRepository;
-import bsm.choi.fancafe.domain.user.types.RoleType;
 import bsm.choi.fancafe.global.exception.ErrorCode.ErrorCode;
 import bsm.choi.fancafe.global.exception.GlobalException;
 import bsm.choi.fancafe.global.utils.FileUtil;
@@ -89,20 +87,5 @@ public class AuthService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public String refresh(String refreshToken) {
         return null;
-    }
-
-    // 권한 추가
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public void addRole(UserRoleUpdateRequest dto) {
-        User user = userRepository.findByNickname(dto.nickname())
-                .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
-
-        RoleType newRole =
-                dto.role().equals("관리자") ?
-                        RoleType.ROLE_ADMIN :
-                        RoleType.ROLE_USER;
-
-        user.addRole(newRole);
-        userRepository.save(user);
     }
 }

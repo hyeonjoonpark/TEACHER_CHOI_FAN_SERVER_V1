@@ -84,18 +84,8 @@ public class User {
         this.sellList.add(goods);
     }
 
-    // RoleType 열거형의 컬렉션이 user_roles 테이블에 저장
-    // 엔티티의 컬렉션 필드가 기본 엔티티와 별도로 저장됨
-    @ElementCollection(targetClass = RoleType.class)
-    // user_roles 테이블이 user_id 컬럼을 통해 User 엔티티와 조인됨
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Setter
-    private Set<RoleType> roles = new HashSet<>();
-
-    public void addRole(RoleType role) {
-        this.roles.add(role);
-    }
+    private RoleType role;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -113,7 +103,7 @@ public class User {
         this.profileImageName = profileImageName;
         this.profileImagePath = profileImagePath;
         this.gradeType = GradeType.NEW;
-        this.roles = Collections.singleton(RoleType.ROLE_USER);
+        this.role = RoleType.ROLE_USER;
         this.fcmToken = fcmToken;
     }
 
