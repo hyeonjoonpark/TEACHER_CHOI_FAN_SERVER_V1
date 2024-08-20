@@ -11,10 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -103,7 +100,7 @@ public class User {
     private String fcmToken;
 
     @Builder
-    public User(String email, String password, String name, String nickname, int point, String profileImageName, String profileImagePath, List<Board> boardList, List<Comment> commentList, List<Goods> sellList, Set<RoleType> roles, String fcmToken) {
+    public User(String email, String password, String name, String nickname, int point, String profileImageName, String profileImagePath, Set<RoleType> roles, String fcmToken) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -111,11 +108,8 @@ public class User {
         this.point = point;
         this.profileImageName = profileImageName;
         this.profileImagePath = profileImagePath;
-        this.boardList = boardList;
-        this.commentList = commentList;
-        this.sellList = sellList;
-        this.roles = roles;
         this.gradeType = GradeType.NEW;
+        this.roles = Collections.singleton(RoleType.ROLE_USER);
         this.fcmToken = fcmToken;
     }
 
