@@ -5,6 +5,7 @@ import bsm.choi.fancafe.domain.comment.Comment;
 import bsm.choi.fancafe.domain.goods.Goods;
 import bsm.choi.fancafe.domain.user.types.GradeType;
 import bsm.choi.fancafe.domain.user.types.RoleType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -30,6 +31,13 @@ public class User {
     @Email
     @Column(unique = true, nullable = false)
     private String email;
+
+
+    /**
+     * @JsonIgnore 어노테이션이 적용된 필드는 JSON 직렬화 및 역직렬화 과정에서 무시됩니다
+     * 개인정보나 보안 관련 정보 등을 JSON 으로 변환할 때 노출되지 않도록 할 수 있습니다
+     */
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

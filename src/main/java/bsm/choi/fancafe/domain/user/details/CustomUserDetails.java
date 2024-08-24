@@ -1,34 +1,38 @@
 package bsm.choi.fancafe.domain.user.details;
 
-import bsm.choi.fancafe.domain.user.User;
-import bsm.choi.fancafe.domain.user.types.RoleType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-    private final User user;
+@Getter
+@Builder
+public class CustomUserDetails implements UserDetails, Serializable {
+    private final String username;
+    @JsonIgnore
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return username;
     }
 
     /**
